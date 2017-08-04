@@ -3,6 +3,7 @@ package debugbridge.mybooks.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import debugbridge.mybooks.Adapter.SubCategoryRecyclerAdapter;
 import debugbridge.mybooks.Model.MainCategory;
 import debugbridge.mybooks.Model.SubCategory;
 import debugbridge.mybooks.R;
+import debugbridge.mybooks.listener.OnClickListener;
 
 public class BooksList extends Fragment {
 
@@ -108,7 +110,16 @@ public class BooksList extends Fragment {
         list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
         list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
 
-//        list.add(new MainCategory("5","Medical","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9bZ2tM96hdWqurCH96_7KmFJpO9N6sMrwPkqx4O6Rv6zydNmG"));
+        list.add(new MainCategory("5","Medical","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9bZ2tM96hdWqurCH96_7KmFJpO9N6sMrwPkqx4O6Rv6zydNmG"));
+        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
 
 
         adapter = new SubCategoryRecyclerAdapter(list,getContext(), getActivity());
@@ -134,6 +145,22 @@ public class BooksList extends Fragment {
         booklist_recyclerview.setAdapter(adapter);
         booklist_recyclerview.setHasFixedSize(true);
         booklist_recyclerview.setItemAnimator(new DefaultItemAnimator());
+        adapter.setOnItemClick(new OnClickListener() {
+            @Override
+            public void onItemClick(int position, View view) {
+                SubCategory subCategory = (SubCategory) list.get(position);
+                Fragment fragment = new ViewBooks();
+                Bundle bundle = new Bundle();
+                bundle.putString("id", subCategory.getId());
+                fragment.setArguments(bundle);
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.add(R.id.home_content, fragment);
+                fragmentTransaction.addToBackStack(MyBooks.class.getName());
+                fragmentTransaction.commit();
+            }
+        });
 
         return view;
     }

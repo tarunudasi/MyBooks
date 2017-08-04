@@ -61,9 +61,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_home);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override
@@ -71,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0){
             String tag = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName();
             if (getSupportFragmentManager().findFragmentByTag(tag).getChildFragmentManager().getBackStackEntryCount() > 0){
-                getSupportFragmentManager().findFragmentByTag(tag).getChildFragmentManager().popBackStack();
+                getSupportFragmentManager().findFragmentByTag(tag).getChildFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }else if (getSupportFragmentManager().getBackStackEntryCount() > 1){
                 super.onBackPressed();
                 updateNavigationColor();

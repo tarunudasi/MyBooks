@@ -19,7 +19,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import debugbridge.mybooks.Model.MainCategory;
 import debugbridge.mybooks.Model.SubCategory;
 import debugbridge.mybooks.R;
-import debugbridge.mybooks.listener.GetPostion;
 import debugbridge.mybooks.listener.OnClickListener;
 
 public class SubCategoryRecyclerAdapter extends RecyclerView.Adapter{
@@ -30,7 +29,6 @@ public class SubCategoryRecyclerAdapter extends RecyclerView.Adapter{
     private final int TITLE = 0, CATEGORY = 1;
     private int lastPosition;
     private FragmentActivity activityCompat;
-    private GetPostion getPostion;
 
     public SubCategoryRecyclerAdapter(List<Object> list, Context context, FragmentActivity activityCompat) {
         this.list = list;

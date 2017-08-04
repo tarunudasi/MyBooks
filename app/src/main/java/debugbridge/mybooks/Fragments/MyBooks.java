@@ -61,11 +61,11 @@ public class MyBooks extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("id", mainCategory.getId());
                 fragment.setArguments(bundle);
-                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 fragmentTransaction.add(R.id.home_content, fragment);
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.addToBackStack(MyBooks.class.getName());
                 fragmentTransaction.commit();
             }
         });
