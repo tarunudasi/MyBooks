@@ -39,11 +39,11 @@ public class MyBooks extends Fragment {
 
         list = new ArrayList<>();
         list.add(new Slidder(img));
-        list.add(new MainCategory("Competitive","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new MainCategory("Diploma","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiJyqBNbAQQHyJBDvjxoyR7_VdUB1T0VoOYlI9376gPj2Wsi2R"));
-        list.add(new MainCategory("Engineering","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfmOAo253JOBjjEKJMr435Td_99E4_bWjdK55t9MdO186sBD0hkw"));
-        list.add(new MainCategory("High School","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqKQv3m3dwigJ_QBNH1GRu-o5LkkZN-W5CThsElFvIhxGravSu8Q"));
-        list.add(new MainCategory("Medical","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9bZ2tM96hdWqurCH96_7KmFJpO9N6sMrwPkqx4O6Rv6zydNmG"));
+        list.add(new MainCategory("1","Competitive","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new MainCategory("2","Diploma","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiJyqBNbAQQHyJBDvjxoyR7_VdUB1T0VoOYlI9376gPj2Wsi2R"));
+        list.add(new MainCategory("3","Engineering","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfmOAo253JOBjjEKJMr435Td_99E4_bWjdK55t9MdO186sBD0hkw"));
+        list.add(new MainCategory("4","High School","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqKQv3m3dwigJ_QBNH1GRu-o5LkkZN-W5CThsElFvIhxGravSu8Q"));
+        list.add(new MainCategory("5","Medical","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9bZ2tM96hdWqurCH96_7KmFJpO9N6sMrwPkqx4O6Rv6zydNmG"));
 
         categoryRecyclerAdapter = new CategoryRecyclerAdapter(list,getContext());
 
@@ -51,15 +51,20 @@ public class MyBooks extends Fragment {
         category_recycler_view.setHasFixedSize(true);
         category_recycler_view.setItemAnimator(new DefaultItemAnimator());
         category_recycler_view.setAdapter(categoryRecyclerAdapter);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         category_recycler_view.setLayoutManager(mLayoutManager);
         categoryRecyclerAdapter.setOnItemClick(new OnClickListener() {
             @Override
             public void onItemClick(int position, View view) {
+                MainCategory mainCategory = (MainCategory) list.get(position);
+                Fragment fragment = new BooksList();
+                Bundle bundle = new Bundle();
+                bundle.putString("id", mainCategory.getId());
+                fragment.setArguments(bundle);
                 FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                fragmentTransaction.add(R.id.home_content, new BooksList());
+                fragmentTransaction.add(R.id.home_content, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }

@@ -4,8 +4,9 @@
     android:background="@android:color/white"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="list"
+    <android.support.v7.widget.RecyclerView
+        android:layout_gravity="center"
+        android:id="@+id/booklist_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -7,6 +7,12 @@ public class MainCategory {
     public MainCategory() {
     }
 
+    public MainCategory(String id, String name, String img) {
+        this.id = id;
+        this.name = name;
+        this.img = img;
+    }
+
     public MainCategory(String name, String img) {
         this.name = name;
         this.img = img;
