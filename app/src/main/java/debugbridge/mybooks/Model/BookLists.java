@@ -1,15 +1,35 @@
 package debugbridge.mybooks.Model;
 
-public class Viewbooks {
+import java.io.Serializable;
 
-    private String id, title, cost, desc, img;
+public class BookLists implements Serializable {
 
-    public Viewbooks(String id, String title, String cost, String desc, String img) {
+    private String id, title, cost, desc, img, contact_person, contact_number;
+
+    public BookLists(String id, String title, String cost, String desc, String img, String contact_person, String contact_number) {
         this.id = id;
         this.title = title;
         this.cost = cost;
         this.desc = desc;
         this.img = img;
+        this.contact_person = contact_person;
+        this.contact_number = contact_number;
+    }
+
+    public String getContact_person() {
+        return contact_person;
+    }
+
+    public void setContact_person(String contact_person) {
+        this.contact_person = contact_person;
+    }
+
+    public String getContact_number() {
+        return contact_number;
+    }
+
+    public void setContact_number(String contact_number) {
+        this.contact_number = contact_number;
     }
 
     public void setImg(String img) {

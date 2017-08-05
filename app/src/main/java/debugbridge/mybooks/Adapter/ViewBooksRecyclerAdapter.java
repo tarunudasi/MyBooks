@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import debugbridge.mybooks.Model.Viewbooks;
+import debugbridge.mybooks.Model.BookLists;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.listener.OnClickListener;
 
@@ -59,7 +59,7 @@ public class ViewBooksRecyclerAdapter extends RecyclerView.Adapter{
         activityCompat.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         if (holder.getItemViewType() == BOOKS) {
-            Viewbooks viewBooks = (Viewbooks) list.get(position);
+            BookLists viewBooks = (BookLists) list.get(position);
             ViewBooksViewHolder viewBooksViewHolder = (ViewBooksViewHolder) holder;
             holder.itemView.getLayoutParams().width = displayMetrics.widthPixels / 2;
             viewBooksViewHolder.title_view_books_recycler.setText(viewBooks.getTitle());
@@ -74,7 +74,7 @@ public class ViewBooksRecyclerAdapter extends RecyclerView.Adapter{
 
     @Override
     public int getItemViewType(int position) {
-        if (list.get(position) instanceof Viewbooks) {
+        if (list.get(position) instanceof BookLists) {
             return BOOKS;
         }
         return -1;

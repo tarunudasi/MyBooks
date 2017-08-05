@@ -152,6 +152,7 @@ public class BooksList extends Fragment {
                 Fragment fragment = new ViewBooks();
                 Bundle bundle = new Bundle();
                 bundle.putString("id", subCategory.getId());
+                bundle.putString("title", subCategory.getTitle());
                 fragment.setArguments(bundle);
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);

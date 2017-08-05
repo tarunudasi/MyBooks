@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.R;
 
 public class SellBooks extends Fragment {
@@ -15,6 +16,7 @@ public class SellBooks extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sell_books,container,false);
+
         return view;
     }
 }

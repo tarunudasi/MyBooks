@@ -3,4 +3,6 @@
     <string name="title_my_books">My Books</string>
     <string name="title_sell_books">Sell Books</string>
     <string name="title_profile">Profile</string>
+    <string name="title_activity_book_description">BookDescription</string>
+    <string name="action_settings">Settings</string>
 </resources>
