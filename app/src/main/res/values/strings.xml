@@ -5,4 +5,22 @@
     <string name="title_profile">Profile</string>
     <string name="title_activity_book_description">BookDescription</string>
     <string name="action_settings">Settings</string>
+
+
+
+    <string name="Home">Home</string>
+    <string name="Profile">Profile</string>
+    <string name="add">Add</string>
+    <string name="Nmae">NAME:</string>
+    <string name="phone">8888899999</string>it
+    <string name="Editprofile">EDIT PROFILE</string>
+    <string name="MYBOOKS">MYBOOKS</string>
+    <string name="termsncondi">TERMS AND CONDITIONS</string>
+    <string name="logout">LOGOUT</string>
+    <string name="description">DESCRIPTION</string>
+    <string name="category">CATEGORY</string>
+    <string name="phoneno">PHONE NO:</string>
+    <string name="contactperson">CONTACT DETAILS:</string>
+    <string name="place">PLACE:</string>
+>>>>>>> Stashed changes
 </resources>
