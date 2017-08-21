@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new SellBooks());
                     return true;
 
+
                 case R.id.navigation_profile:
                     replaceFragment(new Profile());
                     return true;
