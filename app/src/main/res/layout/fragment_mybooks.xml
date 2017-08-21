@@ -9,10 +9,15 @@
     android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:background="#eee">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/space"
+        android:layout_height="wrap_content" >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/category_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    </LinearLayout>
 
 </FrameLayout>

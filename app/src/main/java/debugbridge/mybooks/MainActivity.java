@@ -1,5 +1,6 @@
 package debugbridge.mybooks;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,12 +11,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import debugbridge.mybooks.Fragments.MyBooks;
+import debugbridge.mybooks.Fragments.RBooks;
 import debugbridge.mybooks.Fragments.Profile;
 import debugbridge.mybooks.Fragments.SellBooks;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static Context contextOfApplication;
     private BottomNavigationView navigation;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             updateToolbarText(item.getTitle());
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    replaceFragment(new MyBooks());
+                    replaceFragment(new RBooks());
                     return true;
 
                 case R.id.navigation_sell:
@@ -65,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_home);
+
+
+        contextOfApplication = getApplicationContext();
     }
 
     @Override
@@ -97,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateNavigationColor(){
         String tag = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName();
-        if (tag.equals(MyBooks.class.getName())){
+        if (tag.equals(RBooks.class.getName())){
             navigation.setSelectedItemId(R.id.navigation_home);
         }else if (tag.equals(SellBooks.class.getName())){
             navigation.setSelectedItemId(R.id.navigation_sell);
@@ -106,4 +111,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    public static Context getContextOfApplication()
+    {
+        return contextOfApplication;
+    }
 }

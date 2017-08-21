@@ -37,5 +37,5 @@ dependencies {
     compile 'com.daimajia.slider:library:1.1.5@aar'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     testCompile 'junit:junit:4.12'
-
+    compile 'com.mcxiaoke.volley:library:1.0.19'
 }

@@ -39,14 +39,14 @@ public class BooksList extends Fragment {
 
         list = new ArrayList<>();
 
-        list.add(new MainCategory("1","Competitive","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new MainCategory("1","Competitive","http://kaplonoverseas.com/wordpress/wp-content/uploads/2015/11/Top-10-Most-Difficult-Exams-in-the-World-506x250.jpg"));
         list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
         list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
         list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
         list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
 
 
-        list.add(new MainCategory("2","Diploma","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiJyqBNbAQQHyJBDvjxoyR7_VdUB1T0VoOYlI9376gPj2Wsi2R"));
+        list.add(new MainCategory("2","Diploma","https://www.ccny.cuny.edu/sites/default/files/styles/top_slider/public/Diploma%20Image_0.jpg?itok=MF9pnjWk"));
         list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
         list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
         list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
@@ -55,26 +55,6 @@ public class BooksList extends Fragment {
         list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
         list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
         list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-
-
-
-        list.add(new MainCategory("3","Engineering","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfmOAo253JOBjjEKJMr435Td_99E4_bWjdK55t9MdO186sBD0hkw"));
         list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
         list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
         list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
@@ -92,7 +72,27 @@ public class BooksList extends Fragment {
         list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
         list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
 
-        list.add(new MainCategory("4","High School","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqKQv3m3dwigJ_QBNH1GRu-o5LkkZN-W5CThsElFvIhxGravSu8Q"));
+
+
+        list.add(new MainCategory("3","Engineering","http://salearnership.co.za/wp-content/uploads/2016/06/engineering.jpg"));
+        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+
+        list.add(new MainCategory("4","High School","https://hhsvoyager.org/wp-content/uploads/2017/05/635907199239163531550951598_highschool-index.jpg"));
         list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
         list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
         list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
@@ -158,7 +158,7 @@ public class BooksList extends Fragment {
                 fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 fragmentTransaction.add(R.id.home_content, fragment);
-                fragmentTransaction.addToBackStack(MyBooks.class.getName());
+                fragmentTransaction.addToBackStack(RBooks.class.getName());
                 fragmentTransaction.commit();
             }
         });

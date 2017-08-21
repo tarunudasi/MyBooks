@@ -20,7 +20,7 @@ import debugbridge.mybooks.Model.Slidder;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.listener.OnClickListener;
 
-public class MyBooks extends Fragment {
+public class RBooks extends Fragment {
 
     private RecyclerView category_recycler_view;
     private List<Object> list;
@@ -32,17 +32,17 @@ public class MyBooks extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mybooks,container,false);
 
         List<String> img = new ArrayList<>();
-        img.add("http://static2.hypable.com/wp-content/uploads/2013/12/hannibal-season-2-release-date.jpg");
-        img.add("http://tvfiles.alphacoders.com/100/hdclearart-10.png");
-        img.add("http://cdn3.nflximg.net/images/3093/2043093.jpg");
-        img.add("http://images.boomsbeat.com/data/images/full/19640/game-of-thrones-season-4-jpg.jpg");
+        img.add("https://16815-presscdn-0-13-pagely.netdna-ssl.com/wp-content/uploads/2015/10/students-in-grp.151119.jpg");
+        img.add("https://i0.wp.com/rbms.info/wp-content/uploads/2014/05/special-collections-books-700x300.jpg?fitu003d700%2C300");
+        img.add("http://www.arch.rpi.edu/wp-content/uploads/2011/09/Library-Photos-3544_OPT.jpg");
+        img.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwnUoUq0ERQxpd7Xs7Osj62uG04PfCvhaFykl9h1_2jbgWDxaRWw");
 
         list = new ArrayList<>();
         list.add(new Slidder(img));
-        list.add(new MainCategory("1","Competitive","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new MainCategory("2","Diploma","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiJyqBNbAQQHyJBDvjxoyR7_VdUB1T0VoOYlI9376gPj2Wsi2R"));
-        list.add(new MainCategory("3","Engineering","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfmOAo253JOBjjEKJMr435Td_99E4_bWjdK55t9MdO186sBD0hkw"));
-        list.add(new MainCategory("4","High School","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqKQv3m3dwigJ_QBNH1GRu-o5LkkZN-W5CThsElFvIhxGravSu8Q"));
+        list.add(new MainCategory("1","Competitive","http://kaplonoverseas.com/wordpress/wp-content/uploads/2015/11/Top-10-Most-Difficult-Exams-in-the-World-506x250.jpg"));
+        list.add(new MainCategory("2","Diploma","https://www.ccny.cuny.edu/sites/default/files/styles/top_slider/public/Diploma%20Image_0.jpg?itok=MF9pnjWk"));
+        list.add(new MainCategory("3","Engineering","http://salearnership.co.za/wp-content/uploads/2016/06/engineering.jpg"));
+        list.add(new MainCategory("4","High School","https://hhsvoyager.org/wp-content/uploads/2017/05/635907199239163531550951598_highschool-index.jpg"));
         list.add(new MainCategory("5","Medical","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9bZ2tM96hdWqurCH96_7KmFJpO9N6sMrwPkqx4O6Rv6zydNmG"));
 
         categoryRecyclerAdapter = new CategoryRecyclerAdapter(list,getContext());
@@ -65,7 +65,7 @@ public class MyBooks extends Fragment {
                 fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 fragmentTransaction.add(R.id.home_content, fragment);
-                fragmentTransaction.addToBackStack(MyBooks.class.getName());
+                fragmentTransaction.addToBackStack(RBooks.class.getName());
                 fragmentTransaction.commit();
             }
         });
