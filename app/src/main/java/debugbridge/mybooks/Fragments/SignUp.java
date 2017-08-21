@@ -12,6 +12,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import debugbridge.mybooks.R;
 
 /**
@@ -22,6 +32,13 @@ import debugbridge.mybooks.R;
     EditText inpu_name,input_ph,input_pass,input_email;
     String name,phone,pass,email;
     AppCompatButton save;
+    private static final String REGISTER_URL=null;
+
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_PASSWORD = "password";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_PHONE="phone";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,9 +78,44 @@ import debugbridge.mybooks.R;
                         }
                     }
                 }
+
+
+                registeruser();
             }
         });
 
         return view;
     }
+
+    private void registeruser() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(getActivity().getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity().getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put(KEY_USERNAME,name);
+                params.put(KEY_PASSWORD,pass);
+                params.put(KEY_EMAIL, email);
+                params.put(KEY_PHONE,phone);
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+
 }
+
