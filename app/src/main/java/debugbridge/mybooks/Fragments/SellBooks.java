@@ -1,21 +1,16 @@
 package debugbridge.mybooks.Fragments;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Icon;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -27,23 +22,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.R;
-
-import static android.app.Activity.RESULT_OK;
 
 public class SellBooks extends Fragment implements AdapterView.OnItemSelectedListener {
     private static final int RESULT_LOAD_IMG = 111;
@@ -51,7 +38,7 @@ public class SellBooks extends Fragment implements AdapterView.OnItemSelectedLis
     public static final int MEDIA_TYPE_IMAGE = 1;
 
     Spinner category,subcategory;
-     EditText description;
+    EditText description;
     AppCompatImageView sell_book;
     Context applicationContext;
     FloatingActionButton upload_book_image;
@@ -65,7 +52,7 @@ public class SellBooks extends Fragment implements AdapterView.OnItemSelectedLis
 
 
       category = (Spinner) view.findViewById(R.id.category);
-         description = (EditText) view.findViewById(R.id.description);
+        description = (EditText) view.findViewById(R.id.description);
          sell_book = (AppCompatImageView) view.findViewById(R.id.bookimage);
          upload_book_image = (FloatingActionButton) view.findViewById(R.id.fab);
         subcategory=(Spinner)view.findViewById(R.id.subcategory);
@@ -143,7 +130,6 @@ public class SellBooks extends Fragment implements AdapterView.OnItemSelectedLis
             });
         builder.show();
     }
-
 
 
     @Override

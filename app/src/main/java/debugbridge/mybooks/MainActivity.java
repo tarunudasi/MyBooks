@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new SellBooks());
                     return true;
 
-
                 case R.id.navigation_profile:
                     replaceFragment(new Profile());
                     return true;
@@ -43,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
-
 
     private void replaceFragment (Fragment fragment){
         String backStateName =  fragment.getClass().getName();
@@ -68,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_home);
-
 
         contextOfApplication = getApplicationContext();
     }

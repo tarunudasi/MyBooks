@@ -1,9 +1,7 @@
 package debugbridge.mybooks.Activities;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
@@ -18,20 +16,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.squareup.picasso.Downloader;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import debugbridge.mybooks.Fragments.SignUp;
-import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.R;
 
-import static android.accounts.AccountManager.KEY_PASSWORD;
-
-/**
- * Created by ram on 17/8/17.
- */
 
 public class Login_screen extends AppCompatActivity {
     EditText mobno, pass;
@@ -77,8 +68,9 @@ public class Login_screen extends AppCompatActivity {
             skip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent login = new Intent(Login_screen.this, MainActivity.class);
+                    Intent login = new Intent(Login_screen.this, GetLocation.class);
                     startActivity(login);
+                    Login_screen.this.finish();
                 }
             });
         
@@ -115,7 +107,7 @@ public class Login_screen extends AppCompatActivity {
     }
 
     private void openProfile(){
-        Intent login = new Intent(Login_screen.this, MainActivity.class);
+        Intent login = new Intent(Login_screen.this, GetLocation.class);
         startActivity(login);
     }
     }

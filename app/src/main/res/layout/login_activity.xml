@@ -11,134 +11,122 @@
     tools:context=".Activities.Login_screen"
     tools:showIn="@layout/login_activity">
 
-
-   <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-       android:orientation="vertical">
-
-       <Space
-           android:layout_width="match_parent"
-           android:layout_height="50dp" />
-
-      <de.hdodenhof.circleimageview.CircleImageView
-          android:layout_width="100dp"
-          android:layout_height="100dp"
-          android:src="@drawable/logo1"
-          android:layout_gravity="center"
-          app:civ_border_color="@android:color/holo_orange_light"
-          app:civ_border_width="2dp"
-          android:id="@+id/rbooklogo"/>
-
-
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_name"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-
-        <EditText
-            android:id="@+id/input_number"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:textSize="9pt"
-            android:inputType="phone"
-            android:maxLength="10"
-            android:textColor="@color/colorPrimaryDark"
-            android:hint="MOB NO:" />
+            android:layout_height="match_parent">
 
-    </android.support.design.widget.TextInputLayout>
-       <Space
-           android:layout_width="match_parent"
-           android:layout_height="20dp" />
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_pass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_marginTop="20dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/logo1"
+                android:layout_gravity="center"
+                app:civ_border_color="@android:color/holo_orange_light"
+                app:civ_border_width="2dp"
+                android:id="@+id/rbooklogo"/>
 
 
-        <EditText
-            android:id="@+id/input_pass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:textSize="9pt"
-            android:inputType="textPassword"
-            android:textColor="@color/colorPrimaryDark"
-            android:hint="PASSWORD" />
+            <android.support.design.widget.TextInputLayout
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:id="@+id/input_layout_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-    </android.support.design.widget.TextInputLayout>
-       <Space
-           android:layout_width="match_parent"
-           android:layout_height="20dp" />
+                <EditText
+                    android:id="@+id/input_number"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:hint="Mobile" />
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal">
+            </android.support.design.widget.TextInputLayout>
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_gravity="center"
+                android:id="@+id/input_layout_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-           <android.support.v7.widget.AppCompatButton
-                android:id="@+id/login"
+                <EditText
+                    android:id="@+id/input_pass"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="textPassword"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:hint="Password" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:weightSum="1"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight=".5"
+                    android:textSize="16sp"
+                    android:textColor="#FFFFFF"
+                    android:padding="10dp"
+                    android:background="#3F51B5"
+                    android:text="LOGIN"/>
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/sign_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:textColor="#FFFFFF"
+                    android:padding="10dp"
+                    android:background="#3F51B5"
+                    android:textSize="16sp"
+                    android:text="SIGNUP"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-               android:layout_marginLeft="10dp"
-                android:layout_weight=".2"
-               android:textSize="8pt"
-                android:textColor="#FFFFFF"
-                android:padding="10dp"
-                android:background="#3F51B5"
-                android:text="LOGIN"/>
-           <Space
-               android:layout_width="5dp"
-               android:layout_height="0dp" />
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/colorPrimary"
+                android:text="Forget Password?"
+                android:id="@+id/fprget_pass"/>
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/sign_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-       android:layout_weight=".2"
-        android:layout_marginRight="10dp"
-        android:textColor="#FFFFFF"
-        android:padding="10dp"
-        android:background="#3F51B5"
-        android:textSize="8pt"
-        android:text="SIGNUP"/>
-       </LinearLayout>
-       <Space
-           android:layout_width="match_parent"
-           android:layout_height="3dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/colorPrimary"
+                android:text="Skip>>"
+                android:id="@+id/skip"/>
 
+        </LinearLayout>
 
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_gravity="center"
-           android:textSize="9pt"
-           android:textColor="@color/colorPrimary"
-           android:text="Forget Password?"
-           android:id="@+id/fprget_pass"/>
-       <Space
-           android:layout_width="match_parent"
-           android:layout_height="30dp" />
+    </ScrollView>
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="end"
-    android:textSize="9pt"
-    android:layout_marginRight="10dp"
-    android:textColor="@color/colorPrimary"
-    android:text="Skip>>"
-    android:id="@+id/skip"/>
-
-
-
-
-
-</LinearLayout>
-    </FrameLayout>
+</FrameLayout>

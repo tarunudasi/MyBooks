@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:scrollbars = "vertical">
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,8 +16,8 @@
 
 
          <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="200dp">
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
 
              <android.support.v7.widget.AppCompatImageView
                  android:id="@+id/bookimage"
@@ -26,171 +27,112 @@
                  android:layout_alignParentTop="true"
                  android:scaleType="centerCrop"
                  android:layout_height="match_parent"
-                 android:layout_width="match_parent">
-                 </android.support.v7.widget.AppCompatImageView>
+                 android:layout_width="match_parent" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:tint="#000000"
-            app:backgroundTint="@color/colorPrimaryDark"
-            android:src="@drawable/ic_edit_profile">
-
-        </android.support.design.widget.FloatingActionButton>
-
-    </android.support.v7.widget.CardView>
+            <android.support.design.widget.FloatingActionButton
+                android:layout_margin="20dp"
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:tint="#000000"
+                app:backgroundTint="@android:color/white"
+                android:src="@drawable/ic_edit_profile" />
 
 
+        </android.support.v7.widget.CardView>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
 
          <TextView
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:textSize="8pt"
-            android:layout_marginLeft="20dp"
+            android:textSize="18sp"
+             android:layout_margin="16dp"
             android:text="@string/category"
             android:textStyle="bold" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp" />
-
 
         <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
+                android:layout_margin="16dp"
                 android:gravity="center"
                 android:prompt="@string/category"
-                android:id="@+id/category">
+                android:id="@+id/category" />
 
-            </Spinner>
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp" />
 
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
+            android:layout_margin="16dp"
+            android:layout_marginRight="16dp"
             android:gravity="center"
             android:prompt="@string/category"
-            android:id="@+id/subcategory">
-
-        </Spinner>
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp" />
-
-
+            android:id="@+id/subcategory" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginLeft="20dp"
-            android:textSize="8pt"
+            android:layout_margin="16dp"
+            android:textSize="18sp"
             android:text="@string/description"
             android:textStyle="bold" />
         <EditText
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:hint="Enter book description"/>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp" />
-
-
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginLeft="20dp"
-            android:textSize="8pt"
+            android:layout_margin="16dp"
+            android:textSize="18sp"
             android:text="@string/contactperson"
             android:textStyle="bold" />
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
-
-
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginLeft="20dp"
-            android:textSize="8pt"
+            android:layout_margin="16dp"
+            android:textSize="16sp"
             android:hint="SHILPI"
             android:textStyle="bold" />
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
-
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginLeft="20dp"
-            android:textSize="8pt"
+            android:layout_marginLeft="16dp"
+            android:textSize="16sp"
             android:hint="9999777790"
             android:textStyle="bold" />
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginLeft="20dp"
-            android:textSize="8pt"
+            android:layout_margin="16dp"
+            android:textSize="16sp"
             android:hint="commercial building vijay stambh"
             android:textStyle="bold" />
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
-
-
-
-
-
 
         <android.support.v7.widget.AppCompatButton
                 android:id="@+id/sell_books"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp"
                 android:padding="12dp"
                 android:textColor="#FFFFFF"
                 android:background="#3F51B5"
                 android:text="Sell Books"/>
 
         </LinearLayout>
-
-
-
 
 </ScrollView>
 

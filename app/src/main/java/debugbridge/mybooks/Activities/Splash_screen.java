@@ -1,15 +1,11 @@
-package debugbridge.mybooks;
+package debugbridge.mybooks.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
-import debugbridge.mybooks.Activities.Login_screen;
-
-/**
- * Created by ram on 17/8/17.
- */
+import debugbridge.mybooks.R;
 
 public class Splash_screen extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 3000;
