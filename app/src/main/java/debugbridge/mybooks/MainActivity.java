@@ -8,11 +8,10 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import debugbridge.mybooks.Fragments.Profile;
 import debugbridge.mybooks.Fragments.RBooks;
@@ -24,15 +23,15 @@ public class MainActivity extends AppCompatActivity {
     public static Context contextOfApplication;
     private BottomNavigationView navigation;
 
-    public TextView title, subtitle;
-    public ImageView toolbar_image;
+    /*public TextView title, subtitle;
+    public ImageView toolbar_image;*/
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            //updateToolbarText(item.getTitle());
+            updateToolbarText(item.getTitle());
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     replaceFragment(new RBooks());
@@ -72,17 +71,17 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_home);
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
         layoutParams.setBehavior(new BottomNavigationViewBehavior());
 
-        title = (TextView) findViewById(R.id.toolbar_title);
+        /*title = (TextView) findViewById(R.id.toolbar_title);
         subtitle = (TextView) findViewById(R.id.toolbar_subtitle);
         toolbar_image = (ImageView) findViewById(R.id.toolbar_location_image);
-
+*/
         contextOfApplication = getApplicationContext();
     }
 
@@ -107,12 +106,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*public void updateToolbarText(CharSequence text) {
+    public void updateToolbarText(CharSequence text) {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(text);
         }
-    }*/
+    }
 
     private void updateNavigationColor(){
         String tag = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName();

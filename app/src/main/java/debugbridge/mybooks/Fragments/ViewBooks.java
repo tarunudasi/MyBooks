@@ -45,13 +45,13 @@ public class ViewBooks extends Fragment{
             title = bundle.getString("title");
         }
 
-        //((MainActivity)getActivity()).updateToolbarText(title);
+        ((MainActivity)getActivity()).updateToolbarText(title);
 
-        ((MainActivity)getActivity()).title.setText(title);
+        /*((MainActivity)getActivity()).title.setText(title);
         ((MainActivity)getActivity()).subtitle.setVisibility(View.GONE);
         ((MainActivity)getActivity()).toolbar_image.setVisibility(View.GONE);
 
-
+*/
         list = new ArrayList<>();
 
         list.add(new BookLists("1","Title of the book","250","Book is Good","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png","Mr. X", "1234567890"));

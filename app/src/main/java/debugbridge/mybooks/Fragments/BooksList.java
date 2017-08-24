@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import debugbridge.mybooks.Adapter.SubCategoryRecyclerAdapter;
-import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.Model.MainCategory;
 import debugbridge.mybooks.Model.SubCategory;
 import debugbridge.mybooks.R;
@@ -40,10 +39,10 @@ public class BooksList extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book_list, container, false);
 
-        ((MainActivity)getActivity()).title.setText("Book Categories");
+        /*((MainActivity)getActivity()).title.setText("Book Categories");
         ((MainActivity)getActivity()).subtitle.setVisibility(View.GONE);
         ((MainActivity)getActivity()).toolbar_image.setVisibility(View.GONE);
-
+*/
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             id = bundle.getString("id");

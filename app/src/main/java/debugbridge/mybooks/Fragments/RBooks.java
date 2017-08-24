@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import debugbridge.mybooks.Adapter.CategoryRecyclerAdapter;
-import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.Model.MainCategory;
 import debugbridge.mybooks.Model.Slidder;
 import debugbridge.mybooks.R;
@@ -43,11 +42,13 @@ public class RBooks extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mybooks,container,false);
+/*
 
         ((MainActivity)getActivity()).subtitle.setVisibility(View.VISIBLE);
         ((MainActivity)getActivity()).toolbar_image.setVisibility(View.VISIBLE);
         ((MainActivity)getActivity()).title.setText("Bhopal");
         ((MainActivity)getActivity()).subtitle.setText("Madhya Pradesh");
+*/
 
         List<String> img = new ArrayList<>();
         img.add("https://16815-presscdn-0-13-pagely.netdna-ssl.com/wp-content/uploads/2015/10/students-in-grp.151119.jpg");

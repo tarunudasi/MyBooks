@@ -22,7 +22,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:layout_scrollFlags="scroll|enterAlways">
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -52,7 +52,7 @@
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@drawable/ic_location_arrow"/>
-
+-->
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
