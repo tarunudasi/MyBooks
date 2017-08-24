@@ -8,13 +8,18 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import debugbridge.mybooks.Adapter.CategoryRecyclerAdapter;
+import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.Model.MainCategory;
 import debugbridge.mybooks.Model.Slidder;
 import debugbridge.mybooks.R;
@@ -26,10 +31,23 @@ public class RBooks extends Fragment {
     private List<Object> list;
     private CategoryRecyclerAdapter categoryRecyclerAdapter;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mybooks,container,false);
+
+        ((MainActivity)getActivity()).subtitle.setVisibility(View.VISIBLE);
+        ((MainActivity)getActivity()).toolbar_image.setVisibility(View.VISIBLE);
+        ((MainActivity)getActivity()).title.setText("Bhopal");
+        ((MainActivity)getActivity()).subtitle.setText("Madhya Pradesh");
 
         List<String> img = new ArrayList<>();
         img.add("https://16815-presscdn-0-13-pagely.netdna-ssl.com/wp-content/uploads/2015/10/students-in-grp.151119.jpg");
@@ -71,6 +89,23 @@ public class RBooks extends Fragment {
         });
 
         return view;
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                Toast.makeText(getActivity(), "Search", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

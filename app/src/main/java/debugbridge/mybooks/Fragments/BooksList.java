@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import debugbridge.mybooks.Adapter.SubCategoryRecyclerAdapter;
+import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.Model.MainCategory;
 import debugbridge.mybooks.Model.SubCategory;
 import debugbridge.mybooks.R;
@@ -27,10 +29,20 @@ public class BooksList extends Fragment {
     private List<Object> list;
     private String id = "";
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book_list, container, false);
+
+        ((MainActivity)getActivity()).title.setText("Book Categories");
+        ((MainActivity)getActivity()).subtitle.setVisibility(View.GONE);
+        ((MainActivity)getActivity()).toolbar_image.setVisibility(View.GONE);
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -174,6 +186,11 @@ public class BooksList extends Fragment {
             }
         }
         return 0;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
     }
 
 }

@@ -29,6 +29,11 @@ public class ViewBooks extends Fragment{
     private List<Object> list;
     private String id = "", title = "";
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,7 +45,12 @@ public class ViewBooks extends Fragment{
             title = bundle.getString("title");
         }
 
-        ((MainActivity)getActivity()).updateToolbarText(title);
+        //((MainActivity)getActivity()).updateToolbarText(title);
+
+        ((MainActivity)getActivity()).title.setText(title);
+        ((MainActivity)getActivity()).subtitle.setVisibility(View.GONE);
+        ((MainActivity)getActivity()).toolbar_image.setVisibility(View.GONE);
+
 
         list = new ArrayList<>();
 
@@ -75,4 +85,7 @@ public class ViewBooks extends Fragment{
 
         return view;
     }
+
+
+
 }
