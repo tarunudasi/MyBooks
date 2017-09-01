@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dots="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true">
+
+    <ImageView
+        android:id="@+id/location_loading_iv"
+        android:src="@drawable/location_pin"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"/>
+
+    <LinearLayout
+        android:padding="20dp"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="22sp"
+            android:text="Getting Location"
+            android:gravity="bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp" />
+
+        <pl.tajchert.waitingdots.DotsTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="40sp"
+            android:textColor="@color/colorPrimaryDark"
+            dots:autoplay="true"
+            dots:period="1000"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

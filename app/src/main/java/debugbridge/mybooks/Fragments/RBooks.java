@@ -1,5 +1,6 @@
 package debugbridge.mybooks.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,28 +14,45 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import debugbridge.mybooks.Activities.ChangeLocation;
+import debugbridge.mybooks.Activities.SearchableActivity;
 import debugbridge.mybooks.Adapter.CategoryRecyclerAdapter;
+import debugbridge.mybooks.AppVolley.SingletonVolley;
 import debugbridge.mybooks.Model.MainCategory;
 import debugbridge.mybooks.Model.Slidder;
 import debugbridge.mybooks.R;
+import debugbridge.mybooks.Utility.UrlConstant;
 import debugbridge.mybooks.listener.OnClickListener;
+
+import static android.app.Activity.RESULT_OK;
 
 public class RBooks extends Fragment {
 
     private RecyclerView category_recycler_view;
     private List<Object> list;
+    private List<String> img;
     private CategoryRecyclerAdapter categoryRecyclerAdapter;
+    private final int SEARCH_REQUEST = 2222;
+    private final int CHANGE_LOCATION = 4504;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
     }
 
 
@@ -42,27 +60,22 @@ public class RBooks extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mybooks,container,false);
-/*
 
-        ((MainActivity)getActivity()).subtitle.setVisibility(View.VISIBLE);
+        /*((MainActivity)getActivity()).subtitle.setVisibility(View.VISIBLE);
         ((MainActivity)getActivity()).toolbar_image.setVisibility(View.VISIBLE);
         ((MainActivity)getActivity()).title.setText("Bhopal");
         ((MainActivity)getActivity()).subtitle.setText("Madhya Pradesh");
 */
+        /*((MainActivity)getActivity()).title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });*/
 
-        List<String> img = new ArrayList<>();
-        img.add("https://16815-presscdn-0-13-pagely.netdna-ssl.com/wp-content/uploads/2015/10/students-in-grp.151119.jpg");
-        img.add("https://i0.wp.com/rbms.info/wp-content/uploads/2014/05/special-collections-books-700x300.jpg?fitu003d700%2C300");
-        img.add("http://www.arch.rpi.edu/wp-content/uploads/2011/09/Library-Photos-3544_OPT.jpg");
-        img.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwnUoUq0ERQxpd7Xs7Osj62uG04PfCvhaFykl9h1_2jbgWDxaRWw");
-
+        img = new ArrayList<>();
+        getSlider();
         list = new ArrayList<>();
-        list.add(new Slidder(img));
-        list.add(new MainCategory("1","Competitive","http://kaplonoverseas.com/wordpress/wp-content/uploads/2015/11/Top-10-Most-Difficult-Exams-in-the-World-506x250.jpg"));
-        list.add(new MainCategory("2","Diploma","https://www.ccny.cuny.edu/sites/default/files/styles/top_slider/public/Diploma%20Image_0.jpg?itok=MF9pnjWk"));
-        list.add(new MainCategory("3","Engineering","http://salearnership.co.za/wp-content/uploads/2016/06/engineering.jpg"));
-        list.add(new MainCategory("4","High School","https://hhsvoyager.org/wp-content/uploads/2017/05/635907199239163531550951598_highschool-index.jpg"));
-        list.add(new MainCategory("5","Medical","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9bZ2tM96hdWqurCH96_7KmFJpO9N6sMrwPkqx4O6Rv6zydNmG"));
 
         categoryRecyclerAdapter = new CategoryRecyclerAdapter(list,getContext());
 
@@ -91,10 +104,91 @@ public class RBooks extends Fragment {
 
         return view;
     }
+
+    private void getSlider(){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, UrlConstant.SLIDER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        if (response.equals("unsuccessful")){
+                            return;
+                        }
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = jsonObject.getJSONArray("slider");
+
+                            for (int i = 0 ; i < jsonArray.length() ; i++){
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                img.add(object.getString("img"));
+                            }
+
+                            list.add(new Slidder(img));
+
+                            categoryRecyclerAdapter.notifyDataSetChanged();
+
+                            getCategory();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        SingletonVolley.getInstance(getContext()).addToRequestQueue(stringRequest);
+
+    }
+
+    private void getCategory(){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, UrlConstant.CATEGORY,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        if (response.equals("unsuccessful")){
+                            return;
+                        }
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = jsonObject.getJSONArray("categories");
+
+                            for (int i = 0 ; i < jsonArray.length() ; i++){
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                list.add(new MainCategory(object.getString("id"),object.getString("name"),object.getString("img")));
+                                categoryRecyclerAdapter.notifyDataSetChanged();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        SingletonVolley.getInstance(getContext()).addToRequestQueue(stringRequest);
+
+    }
+
+
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -102,11 +196,52 @@ public class RBooks extends Fragment {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_search:
-                Toast.makeText(getActivity(), "Search", Toast.LENGTH_SHORT).show();
+                startActivityForResult(new Intent(getActivity(), SearchableActivity.class),SEARCH_REQUEST);
+                return true;
+            case R.id.action_location:
+                startActivityForResult(new Intent(getActivity(), ChangeLocation.class),CHANGE_LOCATION);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == SEARCH_REQUEST){
+            String type = null;
+            String search;
+            if (data.getStringExtra("type").equals("name")){
+                type = data.getStringExtra("type");
+            }else if (data.getStringExtra("type").equals("author")){
+                type = data.getStringExtra("type");
+            }else if (data.getStringExtra("type").equals("publication")){
+                type = data.getStringExtra("type");
+            }
+            search = data.getStringExtra("search");
+            getSearchResult(search, type);
+        }
+
+        if (resultCode == RESULT_OK && requestCode == CHANGE_LOCATION){
+
+        }
+
+    }
+
+    private void getSearchResult(String data, String type){
+
+        Fragment fragment = new SearchResult();
+        Bundle bundle = new Bundle();
+        bundle.putString("data", data);
+        bundle.putString("type", type);
+        fragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.add(R.id.home_content, fragment);
+        fragmentTransaction.addToBackStack(RBooks.class.getName());
+        fragmentTransaction.commit();
+
     }
 
 }

@@ -1,6 +1,7 @@
 package debugbridge.mybooks.Activities;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +25,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -53,6 +57,7 @@ import java.util.Locale;
 import debugbridge.mybooks.Adapter.PlacesAutoCompleteAdapter;
 import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.R;
+import debugbridge.mybooks.SharedPrefs.LocationPrefs;
 import debugbridge.mybooks.Utility.Constants;
 import debugbridge.mybooks.listener.RecyclerItemClickListener;
 
@@ -63,7 +68,7 @@ public class GetLocation extends AppCompatActivity implements GoogleApiClient.Co
         GoogleApiClient.OnConnectionFailedListener, LocationListener,
         View.OnClickListener {
 
-    protected static final String TAG = "LocationOnOff";
+    protected static final String TAG = "LOCATION";
     private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 3001;
 
     Location mLocation;
@@ -82,9 +87,7 @@ public class GetLocation extends AppCompatActivity implements GoogleApiClient.Co
 
     private CardView use_location;
 
-
-
-
+    PendingResult<LocationSettingsResult> result;
 
     private static final LatLngBounds BOUNDS_INDIA = new LatLngBounds(
             new LatLng(-0, 0), new LatLng(0, 0));
@@ -134,28 +137,6 @@ public class GetLocation extends AppCompatActivity implements GoogleApiClient.Co
 
         buildGoogleApiClient();
 
-
-        /*//callPlaceAutocompleteActivityIntent();
-
-
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                Log.i(TAG, "Place: " + place.getName());
-            }
-
-            @Override
-            public void onError(Status status) {
-                // TODO: Handle the error.
-                Log.i(TAG, "An error occurred: " + status);
-            }
-        });*/
-
-
         mAutocompleteView = (EditText)findViewById(R.id.search_et);
 
         delete=(ImageView)findViewById(R.id.clear);
@@ -196,13 +177,33 @@ public class GetLocation extends AppCompatActivity implements GoogleApiClient.Co
                     public void onItemClick(View view, int position) {
                         final PlacesAutoCompleteAdapter.PlaceAutocomplete item = mAutoCompleteAdapter.getItem(position);
                         final String placeId = String.valueOf(item.placeId);
+
+                        final PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+                                .getPlaceById(mGoogleApiClient, placeId);
+
+                        ProgressDialog progressDialog = new ProgressDialog(GetLocation.this, R.style.full_screen_dialog);
+                        progressDialog.setCanceledOnTouchOutside(false);
+                        progressDialog.setCancelable(true);
+                        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                            @Override
+                            public void onCancel(DialogInterface dialog) {
+                                placeResult.cancel();
+                            }
+                        });
+                        progressDialog.show();
+                        progressDialog.getWindow().setContentView(R.layout.progress_dialog_location);
+                        progressDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                                WindowManager.LayoutParams.MATCH_PARENT);
+
+                        ImageView imageView = (ImageView) progressDialog.getWindow().findViewById(R.id.location_loading_iv);
+                        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+                        imageView.startAnimation(animation);
+
                         Log.i("TAG", "Autocomplete item selected: " + item.description);
                         /*
                              Issue a request to the Places Geo Data API to retrieve a Place object with additional details about the place.
                          */
 
-                        PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
-                                .getPlaceById(mGoogleApiClient, placeId);
                         placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
                             @Override
                             public void onResult(PlaceBuffer places) {
@@ -210,6 +211,9 @@ public class GetLocation extends AppCompatActivity implements GoogleApiClient.Co
                                     //Do the things here on Click.....
                                     //Toast.makeText(getApplicationContext(),String.valueOf(places.get(0).getLatLng()),Toast.LENGTH_SHORT).show();
                                     try {
+                                        LocationPrefs.getInstance(GetLocation.this).setLocation(new debugbridge.mybooks.Model.Location(places.get(0).getLatLng().latitude, places.get(0).getLatLng().longitude));
+                                        startActivity(new Intent(GetLocation.this, MainActivity.class));
+                                        GetLocation.this.finish();
                                         getCity(places.get(0).getLatLng().latitude, places.get(0).getLatLng().longitude);
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -227,19 +231,6 @@ public class GetLocation extends AppCompatActivity implements GoogleApiClient.Co
 
 
     }
-
-    /*private void callPlaceAutocompleteActivityIntent() {
-        try {
-            Intent intent =
-                    new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-                            .build(this);
-            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-//PLACE_AUTOCOMPLETE_REQUEST_CODE is integer for request code
-        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
-            // TODO: Handle the error.
-        }
-
-    }*/
 
     private ArrayList findUnAskedPermissions(ArrayList wanted) {
         ArrayList result = new ArrayList();
@@ -425,6 +416,23 @@ public class GetLocation extends AppCompatActivity implements GoogleApiClient.Co
         if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER) && hasGPSDevice(GetLocation.this)) {
             //Toast.makeText(GetLocation.this, "Gps already enabled", Toast.LENGTH_SHORT).show();
             enableLoc();
+            ProgressDialog progressDialog = new ProgressDialog(GetLocation.this, R.style.full_screen_dialog);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setCancelable(true);
+            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    result.cancel();
+                }
+            });
+            progressDialog.show();
+            progressDialog.getWindow().setContentView(R.layout.progress_dialog_location);
+            progressDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT);
+            ImageView imageView = (ImageView) progressDialog.getWindow().findViewById(R.id.location_loading_iv);
+            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+            imageView.startAnimation(animation);
+
         }
         // Todo Location Already on  ... end
 
@@ -469,9 +477,10 @@ public class GetLocation extends AppCompatActivity implements GoogleApiClient.Co
 
             builder.setAlwaysShow(true);
 
-            PendingResult<LocationSettingsResult> result =
-                    LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
+            result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
+
             result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+
                 @Override
                 public void onResult(LocationSettingsResult result) {
                     final Status status = result.getStatus();
@@ -496,6 +505,7 @@ public class GetLocation extends AppCompatActivity implements GoogleApiClient.Co
                                     public void onLocationChanged(Location location) {
                                         try {
                                             getCity(location.getLatitude(), location.getLongitude());
+                                            LocationPrefs.getInstance(GetLocation.this).setLocation(new debugbridge.mybooks.Model.Location(location.getLatitude(), location.getLongitude()));
                                             startActivity(new Intent(GetLocation.this, MainActivity.class));
                                             GetLocation.this.finish();
                                         } catch (IOException e) {
@@ -506,6 +516,7 @@ public class GetLocation extends AppCompatActivity implements GoogleApiClient.Co
                             }else{
                                 try {
                                     getCity(mLocation.getLatitude(), mLocation.getLongitude());
+                                    LocationPrefs.getInstance(GetLocation.this).setLocation(new debugbridge.mybooks.Model.Location(mLocation.getLatitude(), mLocation.getLongitude()));
                                     startActivity(new Intent(GetLocation.this, MainActivity.class));
                                     GetLocation.this.finish();
                                 } catch (IOException e) {

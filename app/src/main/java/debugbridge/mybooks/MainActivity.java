@@ -1,6 +1,6 @@
 package debugbridge.mybooks;
-
-import android.content.Context;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,19 +12,22 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import debugbridge.mybooks.Fragments.Profile;
 import debugbridge.mybooks.Fragments.RBooks;
 import debugbridge.mybooks.Fragments.SellBooks;
 import debugbridge.mybooks.Utility.BottomNavigationViewBehavior;
 
+;
+
 public class MainActivity extends AppCompatActivity {
 
-    public static Context contextOfApplication;
     private BottomNavigationView navigation;
 
-    /*public TextView title, subtitle;
-    public ImageView toolbar_image;*/
+    public TextView title, subtitle;
+    public ImageView toolbar_image;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -71,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final Drawable upArrow = getResources().getDrawable(R.drawable.ic_back_arrow);
+        upArrow.setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
         //getSupportActionBar().setDisplayShowTitleEnabled(false);
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -78,11 +84,12 @@ public class MainActivity extends AppCompatActivity {
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
         layoutParams.setBehavior(new BottomNavigationViewBehavior());
 
+        //handleIntent(getIntent());
+
         /*title = (TextView) findViewById(R.id.toolbar_title);
         subtitle = (TextView) findViewById(R.id.toolbar_subtitle);
         toolbar_image = (ImageView) findViewById(R.id.toolbar_location_image);
-*/
-        contextOfApplication = getApplicationContext();
+        */
     }
 
     @Override
@@ -124,8 +131,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static Context getContextOfApplication()
-    {
-        return contextOfApplication;
-    }
 }

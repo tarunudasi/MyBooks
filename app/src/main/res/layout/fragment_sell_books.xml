@@ -1,138 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="#ffffff"
+    android:background="@android:color/white"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:scrollbars = "vertical">
-    
+    android:clickable="true"
+    android:fitsSystemWindows="false">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/bookimage"
+            android:src="@drawable/download"
+            android:scaleType="fitXY"
+            android:minHeight="200dp"
+            android:layout_height="300dp"
+            android:layout_width="match_parent" />
 
-         <android.support.v7.widget.CardView
+        <View
             android:layout_width="match_parent"
-            android:layout_height="200dp">
-
-             <android.support.v7.widget.AppCompatImageView
-                 android:id="@+id/bookimage"
-                 android:src="@drawable/download"
-                 android:layout_alignParentLeft="true"
-                 android:layout_alignParentStart="true"
-                 android:layout_alignParentTop="true"
-                 android:scaleType="centerCrop"
-                 android:layout_height="match_parent"
-                 android:layout_width="match_parent" />
-
-            <android.support.design.widget.FloatingActionButton
-                android:layout_margin="20dp"
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:tint="#000000"
-                app:backgroundTint="@android:color/white"
-                android:src="@drawable/ic_edit_profile" />
-
-
-        </android.support.v7.widget.CardView>
-
-
-         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:textSize="18sp"
-             android:layout_margin="16dp"
-            android:text="@string/category"
-            android:textStyle="bold" />
-
-        <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:gravity="center"
-                android:prompt="@string/category"
-                android:id="@+id/category" />
-
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
 
         <Spinner
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:prompt="@string/category"
+            android:id="@+id/category" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_margin="16dp"
             android:layout_marginRight="16dp"
             android:gravity="center"
             android:prompt="@string/category"
             android:id="@+id/subcategory" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_margin="16dp"
-            android:textSize="18sp"
-            android:text="@string/description"
-            android:textStyle="bold" />
-        <EditText
-            android:id="@+id/description"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <EditText
+            android:padding="8dp"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_marginTop="8dp"
+            android:id="@+id/book_title"
+            android:layout_width="match_parent"
+            android:lines="1"
+            android:maxLength="100"
+            android:inputType="textCapSentences"
+            android:layout_height="60dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:hint="Enter book description"/>
+            android:layout_marginBottom="8dp"
+            android:hint="Title of book"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_margin="16dp"
-            android:textSize="18sp"
-            android:text="@string/contactperson"
-            android:textStyle="bold" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_margin="16dp"
-            android:textSize="16sp"
-            android:hint="SHILPI"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
+        <EditText
+            android:padding="8dp"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_marginTop="8dp"
+            android:id="@+id/book_author"
+            android:layout_width="match_parent"
+            android:lines="1"
+            android:maxLength="100"
+            android:inputType="textCapSentences"
+            android:layout_height="60dp"
             android:layout_marginLeft="16dp"
-            android:textSize="16sp"
-            android:hint="9999777790"
-            android:textStyle="bold" />
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:hint="Book Author"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_margin="16dp"
-            android:textSize="16sp"
-            android:hint="commercial building vijay stambh"
-            android:textStyle="bold" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
 
-        <android.support.v7.widget.AppCompatButton
-                android:id="@+id/sell_books"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:padding="12dp"
-                android:textColor="#FFFFFF"
-                android:background="#3F51B5"
-                android:text="Sell Books"/>
+        <EditText
+            android:padding="8dp"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_marginTop="8dp"
+            android:id="@+id/book_publication"
+            android:layout_width="match_parent"
+            android:lines="1"
+            android:maxLength="100"
+            android:inputType="textCapSentences"
+            android:layout_height="60dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:hint="Publication"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <EditText
+            android:padding="8dp"
+            android:background="@drawable/sell_button"
+            android:layout_marginTop="8dp"
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="start"
+            android:hint="Write Book Description"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_vertical"
+            android:weightSum="1"
+            android:orientation="horizontal"
+            android:layout_height="50dp"
+            android:layout_width="match_parent">
+
+            <ImageView
+                android:tint="@android:color/darker_gray"
+                android:layout_weight="0.2"
+                android:src="@drawable/rupee_indian"
+                android:padding="14dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+
+            <EditText
+                android:backgroundTint="@android:color/transparent"
+                android:hint="Amount"
+                android:paddingLeft="10dp"
+                android:id="@+id/sell_amount"
+                android:lines="1"
+                android:maxLength="6"
+                android:inputType="number"
+                android:layout_weight="0.8"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 
-</ScrollView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+
+    <LinearLayout
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_vertical"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:layout_height="50dp"
+        android:layout_width="match_parent">
+
+        <ImageView
+            android:tint="@android:color/darker_gray"
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_location"
+            android:padding="10dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/sell_location"
+            android:layout_weight="0.8"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:paddingLeft="10dp"
+            android:lines="1"
+            android:ellipsize="marquee"
+            android:gravity="center_vertical"
+            android:layout_gravity="start"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <Button
+            android:id="@+id/sell_books"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:padding="12dp"
+            android:background="@drawable/sell_button"
+            android:textSize="18sp"
+            android:text="Sell"/>
+
+    </LinearLayout>
+
+
+</android.support.v4.widget.NestedScrollView>
 

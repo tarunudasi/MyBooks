@@ -1,5 +1,7 @@
 package debugbridge.mybooks.Fragments;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,14 +13,27 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.victor.loading.book.BookLoading;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import debugbridge.mybooks.Adapter.SubCategoryRecyclerAdapter;
+import debugbridge.mybooks.AppVolley.SingletonVolley;
 import debugbridge.mybooks.Model.MainCategory;
 import debugbridge.mybooks.Model.SubCategory;
 import debugbridge.mybooks.R;
+import debugbridge.mybooks.Utility.UrlConstant;
 import debugbridge.mybooks.listener.OnClickListener;
 
 public class BooksList extends Fragment {
@@ -26,7 +41,11 @@ public class BooksList extends Fragment {
     private RecyclerView booklist_recyclerview;
     private SubCategoryRecyclerAdapter adapter;
     private List<Object> list;
+    private List<MainCategory> mainCategoryList;
+    private List<SubCategory> subCategoryList;
     private String id = "";
+    private GridLayoutManager gridLayoutManager;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,93 +68,31 @@ public class BooksList extends Fragment {
         }
 
         list = new ArrayList<>();
+        mainCategoryList = new ArrayList<>();
+        subCategoryList = new ArrayList<>();
 
-        list.add(new MainCategory("1","Competitive","http://kaplonoverseas.com/wordpress/wp-content/uploads/2015/11/Top-10-Most-Difficult-Exams-in-the-World-506x250.jpg"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
+        getCategory();
 
+        progressDialog = new ProgressDialog(getContext(), R.style.full_screen_dialog);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(true);
+        progressDialog.show();
+        progressDialog.getWindow().setContentView(R.layout.progress_dialog_sell_books);
+        progressDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT);
+        BookLoading bookLoading = (BookLoading) progressDialog.getWindow().findViewById(R.id.book_loading_progress);
+        bookLoading.start();
 
-        list.add(new MainCategory("2","Diploma","https://www.ccny.cuny.edu/sites/default/files/styles/top_slider/public/Diploma%20Image_0.jpg?itok=MF9pnjWk"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-
-
-
-        list.add(new MainCategory("3","Engineering","http://salearnership.co.za/wp-content/uploads/2016/06/engineering.jpg"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-
-        list.add(new MainCategory("4","High School","https://hhsvoyager.org/wp-content/uploads/2017/05/635907199239163531550951598_highschool-index.jpg"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-
-        list.add(new MainCategory("5","Medical","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9bZ2tM96hdWqurCH96_7KmFJpO9N6sMrwPkqx4O6Rv6zydNmG"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("2","Reasoning","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("3","GA","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("4","Banking","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-        list.add(new SubCategory("1","Quantitative","https://www.smartadvantage.com/wp-content/uploads/2013/07/CCA-Books.png"));
-
+        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                getActivity().onBackPressed();
+            }
+        });
 
         adapter = new SubCategoryRecyclerAdapter(list,getContext(), getActivity());
 
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 4);
+        gridLayoutManager = new GridLayoutManager(getContext(), 4);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
@@ -150,7 +107,6 @@ public class BooksList extends Fragment {
             }
         });
 
-        gridLayoutManager.scrollToPosition(getPosition());
         booklist_recyclerview = (RecyclerView) view.findViewById(R.id.booklist_recyclerview);
         booklist_recyclerview.setLayoutManager(gridLayoutManager);
         booklist_recyclerview.setAdapter(adapter);
@@ -177,6 +133,108 @@ public class BooksList extends Fragment {
         return view;
     }
 
+    private void prepareList(){
+
+        for (int i = 0 ; i < mainCategoryList.size() ; i++){
+            list.add(mainCategoryList.get(i));
+            for (int j = 0 ; j < subCategoryList.size() ; j++){
+                if (subCategoryList.get(j).getCategoryId().trim().equals(mainCategoryList.get(i).getId())){
+                    list.add(subCategoryList.get(j));
+                    //subCategoryList.remove(j);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }
+
+        mainCategoryList.clear();
+        subCategoryList.clear();
+
+        gridLayoutManager.scrollToPosition(getPosition());
+        progressDialog.dismiss();
+
+    }
+
+    private void getCategory(){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, UrlConstant.CATEGORY,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        if (response.equals("unsuccessful")){
+                            return;
+                        }
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = jsonObject.getJSONArray("categories");
+
+                            for (int i = 0 ; i < jsonArray.length() ; i++){
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                mainCategoryList.add(new MainCategory(object.getString("id"),object.getString("name"),object.getString("img")));
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            getSubCategory();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        SingletonVolley.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
+
+
+    private void getSubCategory(){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, UrlConstant.SUBCATEGORY,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        if (response.equals("unsuccessful")){
+                            return;
+                        }
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = jsonObject.getJSONArray("subcategories");
+
+                            for (int i = 0 ; i < jsonArray.length() ; i++){
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                subCategoryList.add(new SubCategory(object.getString("id"),object.getString("category"),object.getString("name"),object.getString("img")));
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            prepareList();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+
+        };
+
+        SingletonVolley.getInstance(getContext()).addToRequestQueue(stringRequest);
+
+    }
+
+
     private int getPosition(){
         for (int i = 0; i < list.size() ; i++){
             if(list.get(i) instanceof MainCategory){
@@ -189,7 +247,8 @@ public class BooksList extends Fragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        menu.clear();
+        menu.getItem(0).setVisible(false);
+        menu.getItem(1).setVisible(false);
     }
 
 }

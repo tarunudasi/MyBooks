@@ -1,0 +1,118 @@
+package debugbridge.mybooks.Activities;
+
+import android.app.SearchManager;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+
+import debugbridge.mybooks.Adapter.PagerAdapter;
+import debugbridge.mybooks.Fragments.AuthorTab;
+import debugbridge.mybooks.Fragments.PublicationTab;
+import debugbridge.mybooks.Fragments.TitleTab;
+import debugbridge.mybooks.R;
+
+public class SearchableActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
+
+    PagerAdapter pagerAdapter;
+    TabLayout tabLayout;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_searchable);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setElevation(0.0f);
+
+        tabLayout = (TabLayout) findViewById(R.id.search_tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("Book Name"));
+        tabLayout.addTab(tabLayout.newTab().setText("Author"));
+        tabLayout.addTab(tabLayout.newTab().setText("Publication"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.search_viewpager);
+        pagerAdapter = new PagerAdapter
+                (getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the options menu from XML
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
+        searchView.onActionViewExpanded();
+
+        searchView.setOnQueryTextListener(this);
+
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        //dataFromActivityToFragment.sendData(getApplicationContext(),newText);
+        //adapter.filter(text);
+        int position = tabLayout.getSelectedTabPosition();
+        Fragment fragment = pagerAdapter.getFragment(tabLayout.getSelectedTabPosition());
+
+        if (fragment != null) {
+            switch (position) {
+                case 0:
+                    ((TitleTab) fragment).search(newText);
+                    break;
+                case 1:
+                    ((AuthorTab) fragment).search(newText);
+                    break;
+                case 2:
+                    ((PublicationTab) fragment).search(newText);
+                    break;
+            }
+        }
+
+        return false;
+    }
+
+}

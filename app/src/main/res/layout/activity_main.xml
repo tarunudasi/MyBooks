@@ -29,6 +29,9 @@
 
                 <TextView
                     android:text="Bhopal"
+                    android:maxLength="16"
+                    android:lines="1"
+                    android:textSize="18sp"
                     android:textColor="@android:color/black"
                     android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
@@ -37,6 +40,10 @@
                     android:layout_gravity="center_vertical" />
 
                 <TextView
+                    android:maxLength="12"
+                    android:ellipsize="marquee"
+                    android:lines="1"
+                    android:textSize="16sp"
                     android:text="Madhya Pradesh"
                     android:textColor="@android:color/black"
                     android:id="@+id/toolbar_subtitle"

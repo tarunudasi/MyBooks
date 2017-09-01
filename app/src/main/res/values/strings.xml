@@ -12,15 +12,16 @@
     <string name="add">Add</string>
     <string name="Nmae">NAME:</string>
     <string name="phone">8888899999</string>it
-    <string name="Editprofile">EDIT PROFILE</string>
-    <string name="MYBOOKS">MYBOOKS</string>
-    <string name="termsncondi">TERMS AND CONDITIONS</string>
-    <string name="logout">LOGOUT</string>
+    <string name="MYBOOKS">My Books</string>
+    <string name="termsncondi">Terms &amp; Condition</string>
+    <string name="logout">Logout</string>
     <string name="description">DESCRIPTION</string>
     <string name="category">CATEGORY</string>
     <string name="phoneno">PHONE NO:</string>
     <string name="contactperson">CONTACT DETAILS:</string>
     <string name="place">PLACE:</string>
     <string name="Termsncondi">TERMS AND CONDITION </string>
+    <string name="search">Search</string>
+    <string name="search_hint">Search</string>
     >>>>>>> Stashed changes
 </resources>
