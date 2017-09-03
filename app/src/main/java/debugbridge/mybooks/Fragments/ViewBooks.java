@@ -4,7 +4,8 @@ package debugbridge.mybooks.Fragments;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -77,8 +77,6 @@ public class ViewBooks extends Fragment{
             title = bundle.getString("title");
         }
 
-        ((MainActivity)getActivity()).updateToolbarText(title);
-
         LocationPrefs.getInstance(getContext()).setDistance(10);
 
         progressDialog = new ProgressDialog(getContext(), R.style.full_screen_dialog);
@@ -119,9 +117,7 @@ public class ViewBooks extends Fragment{
             public void onClick(View v) {
 
                 final CharSequence[] items = {" 10 KM "," 20 KM "," 50 KM"," 100 KM", " 200 KM"};
-
                 int dist = LocationPrefs.getInstance(getContext()).getDistance();
-
                 int pos;
 
                 switch (dist){
@@ -140,8 +136,6 @@ public class ViewBooks extends Fragment{
                     default:
                         pos = 0;
                 }
-
-
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getContext(), R.style.AppCompatAlertDialogStyle);
                 dialog.setSingleChoiceItems(items, pos, new DialogInterface.OnClickListener() {
@@ -168,48 +162,16 @@ public class ViewBooks extends Fragment{
                                 }
 
                                 LocationPrefs.getInstance(getContext()).setDistance(distance);
-
-                            }
-                        });
-                dialog.setPositiveButton("Select", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                // If the user checked the item, add it to the selected items
-
                                 textView.setText(LocationPrefs.getInstance(getContext()).getDistance() + " KM");
-
                                 getBooks();
-
                                 dialog.dismiss();
 
                             }
                         });
 
                 final AlertDialog alertDialog = dialog.create();
-
-                TextView title =  new TextView(getContext());
-                title.setText("Range (KM)");
-                title.setGravity(Gravity.CENTER);
-                title.setTextSize(24);
-                title.setPadding(0,20,0,20);
-                title.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                title.setTextColor(Color.WHITE);
-
-                alertDialog.setCustomTitle(title);
-
-                alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                    @Override
-                    public void onShow(DialogInterface dialog) {
-                        Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                        button.setTextSize(18);
-                        button.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                    }
-                });
-
+                alertDialog.getWindow().setGravity(Gravity.BOTTOM);
                 alertDialog.show();
-
-
 
             }
         });
@@ -228,6 +190,18 @@ public class ViewBooks extends Fragment{
         getBooks();
 
         return view;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(title);
+        ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final Drawable upArrow = getResources().getDrawable(R.drawable.ic_back_arrow);
+        upArrow.setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_ATOP);
+        ((MainActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
     }
 
     @Override
@@ -258,44 +232,13 @@ public class ViewBooks extends Fragment{
             public void onClick(DialogInterface dialog, int which) {
 
                 sorting = which;
-
-            }
-        });
-        dialog.setPositiveButton("Select", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // If the user checked the item, add it to the selected items
                 getBooks();
                 dialog.dismiss();
 
             }
         });
-
-        dialog.setCancelable(false);
-
         final AlertDialog alertDialog = dialog.create();
-
-        alertDialog.setCanceledOnTouchOutside(false);
-
-        TextView title =  new TextView(getContext());
-        title.setText("Sorting Type");
-        title.setGravity(Gravity.CENTER);
-        title.setTextSize(24);
-        title.setPadding(0,20,0,20);
-        title.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        title.setTextColor(Color.WHITE);
-
-        alertDialog.setCustomTitle(title);
-
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                button.setTextSize(18);
-                button.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-            }
-        });
-
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
         alertDialog.show();
 
     }
@@ -323,7 +266,7 @@ public class ViewBooks extends Fragment{
 
                             for (int i = 0 ; i < jsonArray.length() ; i++){
                                 JSONObject object = jsonArray.getJSONObject(i);
-                                list.add(new BookLists(object.getString("id"),object.getString("name"),object.getString("amount"),object.getString("description"),object.getString("img"),"Mr. X", "1234567890"));
+                                list.add(new BookLists(object.getString("id"),object.getString("name"),object.getString("amount"),object.getString("description"),object.getString("author"),object.getString("publication"),object.getString("img"),object.getString("user"), object.getString("latitude"), object.getString("longitude")));
                                 adapter.notifyDataSetChanged();
                             }
 

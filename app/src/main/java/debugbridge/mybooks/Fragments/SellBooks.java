@@ -4,7 +4,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -51,6 +53,7 @@ import java.util.Map;
 import debugbridge.mybooks.Activities.ChangeLocation;
 import debugbridge.mybooks.Adapter.SpinnerCustomArrayAdapter;
 import debugbridge.mybooks.AppVolley.SingletonVolley;
+import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.Model.MainCategory;
 import debugbridge.mybooks.Model.SubCategory;
 import debugbridge.mybooks.R;
@@ -158,6 +161,27 @@ public class SellBooks extends Fragment implements AdapterView.OnItemSelectedLis
         publication = (EditText) view.findViewById(R.id.book_publication);
         sell_location = (TextView) view.findViewById(R.id.sell_location);
 
+        Uri imageUri = null;
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            imageUri = Uri.parse(bundle.getString("imageUri"));
+        }
+
+        if (imageUri == null){
+            getActivity().onBackPressed();
+        }
+
+        Bitmap bitmap;
+
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
+            sell_book.setImageBitmap(ImageHelper.getResizedBitmapLessThanMaxSize(bitmap, 500));
+            bitmapImage = ImageHelper.getResizedBitmapLessThanMaxSize(bitmap, 500);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         sell_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,8 +237,6 @@ public class SellBooks extends Fragment implements AdapterView.OnItemSelectedLis
 
             }
         });
-
-        startActivityForResult(ImageHelper.getPickImageChooserIntent(getActivity()), IMAGE_REQUEST_CODE);
 
         sell_book.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -405,7 +427,8 @@ public class SellBooks extends Fragment implements AdapterView.OnItemSelectedLis
                     public void onResponse(String response) {
 
                         if (response.trim().equals("success")){
-                            refreshViews();
+                            //refreshViews();
+                            getActivity().onBackPressed();
                             progressDialog.dismiss();
                         }else if (response.trim().equals("unsuccess")){
                             progressDialog.dismiss();
@@ -454,6 +477,15 @@ public class SellBooks extends Fragment implements AdapterView.OnItemSelectedLis
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
+
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Sell Books");
+        ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final Drawable upArrow = getResources().getDrawable(R.drawable.ic_back_arrow);
+        upArrow.setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_ATOP);
+        ((MainActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
 
         for (int i = 0 ; i < menu.size(); i++){
             menu.getItem(i).setVisible(false);

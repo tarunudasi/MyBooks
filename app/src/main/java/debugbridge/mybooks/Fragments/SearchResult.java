@@ -3,7 +3,8 @@ package debugbridge.mybooks.Fragments;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -41,6 +41,7 @@ import java.util.Map;
 import debugbridge.mybooks.Activities.BookDescription;
 import debugbridge.mybooks.Adapter.ViewBooksRecyclerAdapter;
 import debugbridge.mybooks.AppVolley.SingletonVolley;
+import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.Model.BookLists;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.SharedPrefs.LocationPrefs;
@@ -160,45 +161,15 @@ public class SearchResult extends Fragment{
                         }
 
                         LocationPrefs.getInstance(getContext()).setDistance(distance);
-
-                    }
-                });
-                dialog.setPositiveButton("Select", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        // If the user checked the item, add it to the selected items
-
                         textView.setText(LocationPrefs.getInstance(getContext()).getDistance() + " KM");
-
                         getData(type, data);
-
                         dialog.dismiss();
-
                     }
                 });
+
 
                 final AlertDialog alertDialog = dialog.create();
-
-                TextView title =  new TextView(getContext());
-                title.setText("Range (KM)");
-                title.setGravity(Gravity.CENTER);
-                title.setTextSize(24);
-                title.setPadding(0,20,0,20);
-                title.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                title.setTextColor(Color.WHITE);
-
-                alertDialog.setCustomTitle(title);
-
-                alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                    @Override
-                    public void onShow(DialogInterface dialog) {
-                        Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                        button.setTextSize(18);
-                        button.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                    }
-                });
-
+                alertDialog.getWindow().setGravity(Gravity.BOTTOM);
                 alertDialog.show();
 
 
@@ -242,6 +213,15 @@ public class SearchResult extends Fragment{
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
+
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Search Result");
+        ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final Drawable upArrow = getResources().getDrawable(R.drawable.ic_back_arrow);
+        upArrow.setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_ATOP);
+        ((MainActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
         menu.getItem(0).setVisible(false);
         menu.getItem(1).setVisible(false);
     }
@@ -257,44 +237,14 @@ public class SearchResult extends Fragment{
             public void onClick(DialogInterface dialog, int which) {
 
                 sorting = which;
-
-            }
-        });
-        dialog.setPositiveButton("Select", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // If the user checked the item, add it to the selected items
                 getData(type, data);
                 dialog.dismiss();
 
             }
         });
 
-        dialog.setCancelable(false);
-
         final AlertDialog alertDialog = dialog.create();
-
-        alertDialog.setCanceledOnTouchOutside(false);
-
-        TextView title =  new TextView(getContext());
-        title.setText("Sorting Type");
-        title.setGravity(Gravity.CENTER);
-        title.setTextSize(24);
-        title.setPadding(0,20,0,20);
-        title.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        title.setTextColor(Color.WHITE);
-
-        alertDialog.setCustomTitle(title);
-
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                button.setTextSize(18);
-                button.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-            }
-        });
-
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
         alertDialog.show();
 
     }
@@ -322,7 +272,7 @@ public class SearchResult extends Fragment{
 
                             for (int i = 0 ; i < jsonArray.length() ; i++){
                                 JSONObject object = jsonArray.getJSONObject(i);
-                                list.add(new BookLists(object.getString("id"),object.getString("name"),object.getString("amount"),object.getString("description"),object.getString("img"),"Mr. X", "1234567890"));
+                                list.add(new BookLists(object.getString("id"),object.getString("name"),object.getString("amount"),object.getString("description"),object.getString("author"),object.getString("publication"),object.getString("img"),object.getString("user"), object.getString("latitude"), object.getString("longitude")));
                                 adapter.notifyDataSetChanged();
                             }
 

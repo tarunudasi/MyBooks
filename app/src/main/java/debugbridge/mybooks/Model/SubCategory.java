@@ -1,7 +1,7 @@
 package debugbridge.mybooks.Model;
 
 public class SubCategory {
-    private String id, categoryId,title, img;
+    private String id, categoryId, title, img;
 
     public SubCategory(String id, String categoryId,String title, String img) {
         this.id = id;

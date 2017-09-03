@@ -13,5 +13,6 @@ public class UrlConstant {
     public static final String SEARCH_BY_AUTHOR = BASE + "searchByAuthor.php";
     public static final String SEARCH_BY_PUBLICATION = BASE + "searchByPublication.php";
     public static final String GET_BOOKS_SEARCH = BASE + "getBooksSearch.php";
+    public static final String GET_BOOK_SELLER_DETAILS = BASE + "getBookSellerDetails.php";
 
 }

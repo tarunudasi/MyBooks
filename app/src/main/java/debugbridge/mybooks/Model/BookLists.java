@@ -4,40 +4,35 @@ import java.io.Serializable;
 
 public class BookLists implements Serializable {
 
-    private String id, title, cost, desc, img, contact_person, contact_number;
+    private String id, name, amount, description, author, publication, img, user, latitude, longitude;
 
-    public BookLists(String id, String title, String cost, String desc, String img, String contact_person, String contact_number) {
+    public BookLists(String id, String name, String amount, String description, String author, String publication, String img, String user, String latitude, String longitude) {
         this.id = id;
-        this.title = title;
-        this.cost = cost;
-        this.desc = desc;
+        this.name = name;
+        this.amount = amount;
+        this.description = description;
+        this.author = author;
+        this.publication = publication;
         this.img = img;
-        this.contact_person = contact_person;
-        this.contact_number = contact_number;
+        this.user = user;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
-    public String getContact_person() {
-        return contact_person;
+    public String getLatitude() {
+        return latitude;
     }
 
-    public void setContact_person(String contact_person) {
-        this.contact_person = contact_person;
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 
-    public String getContact_number() {
-        return contact_number;
+    public String getLongitude() {
+        return longitude;
     }
 
-    public void setContact_number(String contact_number) {
-        this.contact_number = contact_number;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
-    public String getImg() {
-        return img;
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 
     public String getId() {
@@ -48,27 +43,59 @@ public class BookLists implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCost() {
-        return cost;
+    public String getAmount() {
+        return amount;
     }
 
-    public void setCost(String cost) {
-        this.cost = cost;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getPublication() {
+        return publication;
+    }
+
+    public void setPublication(String publication) {
+        this.publication = publication;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }

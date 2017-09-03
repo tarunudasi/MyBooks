@@ -2,6 +2,8 @@ package debugbridge.mybooks.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,6 +32,7 @@ import java.util.List;
 
 import debugbridge.mybooks.Adapter.SubCategoryRecyclerAdapter;
 import debugbridge.mybooks.AppVolley.SingletonVolley;
+import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.Model.MainCategory;
 import debugbridge.mybooks.Model.SubCategory;
 import debugbridge.mybooks.R;
@@ -62,6 +65,7 @@ public class BooksList extends Fragment {
         ((MainActivity)getActivity()).subtitle.setVisibility(View.GONE);
         ((MainActivity)getActivity()).toolbar_image.setVisibility(View.GONE);
 */
+
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             id = bundle.getString("id");
@@ -247,6 +251,14 @@ public class BooksList extends Fragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("R Books Categories");
+        ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final Drawable upArrow = getResources().getDrawable(R.drawable.ic_back_arrow);
+        upArrow.setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_ATOP);
+        ((MainActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
         menu.getItem(0).setVisible(false);
         menu.getItem(1).setVisible(false);
     }

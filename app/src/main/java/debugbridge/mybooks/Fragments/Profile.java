@@ -3,7 +3,9 @@ package debugbridge.mybooks.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +23,7 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 import debugbridge.mybooks.Activities.Login_screen;
+import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.R;
 
 
@@ -39,7 +42,6 @@ public class Profile extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-
 
         name = (TextView) view.findViewById(R.id.name);
         phone = (TextView) view.findViewById(R.id.phone);
@@ -139,6 +141,15 @@ public class Profile extends Fragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
+
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Profile");
+        ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final Drawable upArrow = getResources().getDrawable(R.drawable.ic_back_arrow);
+        upArrow.setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_ATOP);
+        ((MainActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
         for (int i = 0 ; i < menu.size(); i++){
             menu.getItem(i).setVisible(false);
         }

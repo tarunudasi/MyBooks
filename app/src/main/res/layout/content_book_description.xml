@@ -72,6 +72,71 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/text_margin"
+                    android:text="Book Author"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/book_author"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/text_margin"
+                    android:paddingBottom="@dimen/text_margin"
+                    android:paddingRight="@dimen/text_margin"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_marginRight="@dimen/text_margin"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:layout_marginBottom="@dimen/text_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_margin"
+                    android:text="Publications"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/book_publication"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/text_margin"
+                    android:paddingBottom="@dimen/text_margin"
+                    android:paddingRight="@dimen/text_margin"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_marginRight="@dimen/text_margin"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:layout_marginBottom="@dimen/text_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_margin"
                     android:text="Book Description"
                     android:textSize="18sp"/>
 
@@ -90,6 +155,41 @@
 
 
         <android.support.v7.widget.CardView
+            android:layout_marginRight="@dimen/text_margin"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:layout_marginBottom="@dimen/text_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_margin"
+                    android:text="Seller Location"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/book_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/text_margin"
+                    android:paddingBottom="@dimen/text_margin"
+                    android:paddingRight="@dimen/text_margin"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:visibility="gone"
+            android:id="@+id/book_seller_contact_details"
             android:layout_marginRight="@dimen/text_margin"
             android:layout_marginLeft="@dimen/text_margin"
             android:layout_marginBottom="@dimen/text_margin"
@@ -166,12 +266,9 @@
 
                 </LinearLayout>
 
-
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
-
-
 
     </LinearLayout>
 

@@ -6,12 +6,11 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_my_books" />
 
-    <item
+    <!--<item
         android:id="@+id/navigation_sell"
         android:icon="@drawable/ic_sell_books"
         android:title="@string/title_sell_books" />
-
-    <item
+-->    <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile"
         android:title="@string/title_profile" />

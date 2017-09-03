@@ -1,6 +1,8 @@
 package debugbridge.mybooks.Fragments;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,16 +27,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import debugbridge.mybooks.Activities.ChangeLocation;
 import debugbridge.mybooks.Activities.SearchableActivity;
 import debugbridge.mybooks.Adapter.CategoryRecyclerAdapter;
 import debugbridge.mybooks.AppVolley.SingletonVolley;
+import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.Model.MainCategory;
 import debugbridge.mybooks.Model.Slidder;
 import debugbridge.mybooks.R;
+import debugbridge.mybooks.SharedPrefs.LocationPrefs;
 import debugbridge.mybooks.Utility.UrlConstant;
 import debugbridge.mybooks.listener.OnClickListener;
 
@@ -72,6 +79,7 @@ public class RBooks extends Fragment {
                 Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
             }
         });*/
+
 
         img = new ArrayList<>();
         getSlider();
@@ -184,11 +192,38 @@ public class RBooks extends Fragment {
 
     }
 
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+        /*Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.main_toolbar);
+        ((MainActivity)getActivity()).setSupportActionBar(toolbar);
+
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //((MainActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        //((MainActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationIcon(R.drawable.ic_my_location);  //your icon
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Do whatever you want to do here
+                startActivityForResult(new Intent(getActivity(), ChangeLocation.class),CHANGE_LOCATION);
+            }
+        });
+*/
+        try {
+            getCity(LocationPrefs.getInstance(getContext()).getLocation().getLatitude(),
+                    LocationPrefs.getInstance(getContext()).getLocation().getLongitude());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main_menu, menu);
+
     }
 
     @Override
@@ -223,6 +258,13 @@ public class RBooks extends Fragment {
         }
 
         if (resultCode == RESULT_OK && requestCode == CHANGE_LOCATION){
+            Log.e("aaya","aa gaya");
+            try {
+                getCity(LocationPrefs.getInstance(getContext()).getLocation().getLatitude(),
+                        LocationPrefs.getInstance(getContext()).getLocation().getLongitude());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }
 
@@ -243,5 +285,61 @@ public class RBooks extends Fragment {
         fragmentTransaction.commit();
 
     }
+
+    private void getCity(double latitude, double longitude) throws IOException {
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(getContext(), Locale.getDefault());
+
+        addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+        String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+        String city = addresses.get(0).getLocality();
+        String state = addresses.get(0).getAdminArea();
+        String country = addresses.get(0).getCountryName();
+        String postalCode = addresses.get(0).getPostalCode();
+        String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
+
+        /*String outputAddress = null;
+        for(Address add : addresses) {
+            *//*for(int i = 0; i < add.getMaxAddressLineIndex(); i++) {
+                outputAddress += " --- " + add.getAddressLine(i);
+            }*//*
+            if (add.getMaxAddressLineIndex() - 2 > 0){
+                outputAddress = add.getAddressLine(add.getMaxAddressLineIndex() - 2);
+            }
+        }*/
+
+        if (city != null){
+            ((MainActivity)getActivity()).getSupportActionBar().setTitle(city);
+        }
+        if (state != null){
+            if (city == null){
+                ((MainActivity)getActivity()).getSupportActionBar().setTitle(state);
+            }else {
+                ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(state);
+            }
+
+        }
+
+        if (country != null){
+            if (state == null && city == null){
+                ((MainActivity)getActivity()).getSupportActionBar().setTitle(country);
+            }else if (state == null){
+                ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(country);
+            }else {
+                ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(state + ", " + country);
+            }
+        }
+
+        if (country == null && state == null & city == null){
+            ((MainActivity)getActivity()).getSupportActionBar().setTitle("R Books");
+        }
+
+        //Log.e(TAG, city + state + country);
+
+    }
+
+
 
 }

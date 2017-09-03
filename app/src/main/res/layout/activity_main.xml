@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="false">
@@ -18,6 +19,7 @@
             android:background="@android:color/white"
             android:layout_width="match_parent"
             app:titleTextColor="@android:color/black"
+            app:subtitleTextColor="@android:color/black"
             android:layout_height="?attr/actionBarSize"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:layout_scrollFlags="scroll|enterAlways">
@@ -80,7 +82,20 @@
         app:itemIconTint="@color/bottom_nav"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
+        android:background="@android:color/white"
         app:menu="@menu/navigation" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:fabSize="normal"
+        app:backgroundTint="@color/colorPrimaryDark"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        app:elevation="8dp"
+        android:tint="@android:color/white"
+        app:srcCompat="@drawable/ic_click_image" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -62,8 +62,8 @@ public class ViewBooksRecyclerAdapter extends RecyclerView.Adapter{
             BookLists viewBooks = (BookLists) list.get(position);
             ViewBooksViewHolder viewBooksViewHolder = (ViewBooksViewHolder) holder;
             holder.itemView.getLayoutParams().width = displayMetrics.widthPixels / 2;
-            viewBooksViewHolder.title_view_books_recycler.setText(viewBooks.getTitle());
-            viewBooksViewHolder.price_view_books_recycler.setText(viewBooks.getCost() + "/-");
+            viewBooksViewHolder.title_view_books_recycler.setText(viewBooks.getName());
+            viewBooksViewHolder.price_view_books_recycler.setText(viewBooks.getAmount() + "/-");
             Picasso.with(context)
                     .load(viewBooks.getImg().replace(" ","%20"))
                     .placeholder(R.drawable.placeholder)
