@@ -2,6 +2,7 @@ package debugbridge.mybooks.Activities;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.ImageView;
 
 import debugbridge.mybooks.Adapter.PagerAdapter;
 import debugbridge.mybooks.Fragments.AuthorTab;
@@ -76,6 +78,20 @@ public class SearchableActivity extends AppCompatActivity implements SearchView.
         searchView.onActionViewExpanded();
 
         searchView.setOnQueryTextListener(this);
+
+        searchView.setBackgroundColor(Color.WHITE);
+
+        SearchView.SearchAutoComplete searchAutoComplete = (SearchView.SearchAutoComplete)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchAutoComplete.setHintTextColor(Color.DKGRAY);
+        searchAutoComplete.setTextColor(Color.BLACK);
+
+        ImageView searchCloseIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        searchCloseIcon.setImageResource(R.drawable.ic_search_clear);
+
+        ImageView searchIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
+        searchIcon.setImageResource(R.drawable.ic_action_search);
+
+
 
         return true;
     }

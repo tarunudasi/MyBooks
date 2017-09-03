@@ -12,7 +12,9 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:elevation="6dp"
-        app:tabIndicatorColor="@android:color/white"
+        app:tabSelectedTextColor="@android:color/black"
+        app:tabIndicatorColor="@android:color/black"
+        app:tabTextColor="@android:color/darker_gray"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 

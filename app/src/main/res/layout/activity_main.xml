@@ -22,47 +22,7 @@
             app:subtitleTextColor="@android:color/black"
             android:layout_height="?attr/actionBarSize"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:layout_scrollFlags="scroll|enterAlways">
-
-            <!--<LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:text="Bhopal"
-                    android:maxLength="16"
-                    android:lines="1"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/black"
-                    android:id="@+id/toolbar_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:layout_gravity="center_vertical" />
-
-                <TextView
-                    android:maxLength="12"
-                    android:ellipsize="marquee"
-                    android:lines="1"
-                    android:textSize="16sp"
-                    android:text="Madhya Pradesh"
-                    android:textColor="@android:color/black"
-                    android:id="@+id/toolbar_subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:layout_gravity="center_vertical" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/toolbar_location_image"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/ic_location_arrow"/>
--->
-        </android.support.v7.widget.Toolbar>
+            app:layout_scrollFlags="scroll|enterAlways" />
 
     </android.support.design.widget.AppBarLayout>
 

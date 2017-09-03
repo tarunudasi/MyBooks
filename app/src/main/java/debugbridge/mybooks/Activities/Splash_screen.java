@@ -13,7 +13,7 @@ public class Splash_screen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash_activity);
+        setContentView(R.layout.activity_splash);
 
         new Handler().postDelayed(new Runnable() {
 
@@ -26,7 +26,7 @@ public class Splash_screen extends AppCompatActivity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent i = new Intent(Splash_screen.this, Login_screen.class);
+                Intent i = new Intent(Splash_screen.this, GetLocation.class);
                 startActivity(i);
 
                 // close this activity

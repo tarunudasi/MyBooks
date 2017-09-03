@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -258,7 +257,6 @@ public class RBooks extends Fragment {
         }
 
         if (resultCode == RESULT_OK && requestCode == CHANGE_LOCATION){
-            Log.e("aaya","aa gaya");
             try {
                 getCity(LocationPrefs.getInstance(getContext()).getLocation().getLatitude(),
                         LocationPrefs.getInstance(getContext()).getLocation().getLongitude());

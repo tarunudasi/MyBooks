@@ -76,6 +76,7 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity android:name=".Activities.SearchableActivity"
+            android:theme="@style/SearchAppTheme"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:screenOrientation="portrait">

@@ -10,7 +10,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -94,13 +93,6 @@ public class MainActivity extends AppCompatActivity {
         CoordinatorLayout.LayoutParams layoutParams1 = (CoordinatorLayout.LayoutParams) button.getLayoutParams();
         layoutParams1.setBehavior(new BottomFloatingBehavior());
 
-
-        //handleIntent(getIntent());
-
-        /*title = (TextView) findViewById(R.id.toolbar_title);
-        subtitle = (TextView) findViewById(R.id.toolbar_subtitle);
-        toolbar_image = (ImageView) findViewById(R.id.toolbar_location_image);
-        */
     }
 
     @Override
@@ -146,13 +138,6 @@ public class MainActivity extends AppCompatActivity {
             }else if (getSupportFragmentManager().getBackStackEntryCount() == 1){
                 finish();
             }
-        }
-    }
-
-    public void updateToolbarText(CharSequence text) {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(text);
         }
     }
 
