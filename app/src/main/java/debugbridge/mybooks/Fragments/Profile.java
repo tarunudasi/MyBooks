@@ -1,28 +1,20 @@
 package debugbridge.mybooks.Fragments;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 
-import debugbridge.mybooks.Activities.Login_screen;
 import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.R;
 
@@ -30,7 +22,6 @@ import debugbridge.mybooks.R;
 public class Profile extends Fragment {
     TextView name,phone,address,mybooks,termncondition,logout;
     ImageView imageView;
-    Context context;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,7 +92,7 @@ public class Profile extends Fragment {
         /**** on click terms and condition **/
 
 
-        termncondition.setOnClickListener(new View.OnClickListener() {
+        /*termncondition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 View popupView = getActivity().getLayoutInflater().inflate(R.layout.termsncondition, null);
@@ -120,11 +111,11 @@ public class Profile extends Fragment {
 
 
             }
-        });
+        });*/
         logout = (TextView) view.findViewById(R.id.log_out);
 
         /******* on click logout */
-        logout.setOnClickListener(new View.OnClickListener() {
+        /*logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getActivity().getApplicationContext(), Login_screen.class);
@@ -132,7 +123,7 @@ public class Profile extends Fragment {
                 getActivity().finish();
 
             }
-        });
+        });*/
 
         return view;
 

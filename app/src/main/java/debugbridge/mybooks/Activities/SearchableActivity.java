@@ -91,14 +91,13 @@ public class SearchableActivity extends AppCompatActivity implements SearchView.
         ImageView searchIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
         searchIcon.setImageResource(R.drawable.ic_action_search);
 
-
-
         return true;
     }
 
     @Override
     public boolean onSupportNavigateUp(){
         finish();
+        overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
         return true;
     }
 

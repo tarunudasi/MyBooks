@@ -28,6 +28,7 @@ public class Splash_screen extends AppCompatActivity {
                 // Start your app main activity
                 Intent i = new Intent(Splash_screen.this, GetLocation.class);
                 startActivity(i);
+                overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
 
                 // close this activity
                 finish();

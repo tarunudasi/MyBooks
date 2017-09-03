@@ -213,6 +213,7 @@ public class GetLocation extends AppCompatActivity implements GoogleApiClient.Co
                                     try {
                                         LocationPrefs.getInstance(GetLocation.this).setLocation(new debugbridge.mybooks.Model.Location(places.get(0).getLatLng().latitude, places.get(0).getLatLng().longitude));
                                         startActivity(new Intent(GetLocation.this, MainActivity.class));
+                                        overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
                                         GetLocation.this.finish();
                                         getCity(places.get(0).getLatLng().latitude, places.get(0).getLatLng().longitude);
                                     } catch (IOException e) {
@@ -507,6 +508,7 @@ public class GetLocation extends AppCompatActivity implements GoogleApiClient.Co
                                             getCity(location.getLatitude(), location.getLongitude());
                                             LocationPrefs.getInstance(GetLocation.this).setLocation(new debugbridge.mybooks.Model.Location(location.getLatitude(), location.getLongitude()));
                                             startActivity(new Intent(GetLocation.this, MainActivity.class));
+                                            overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
                                             GetLocation.this.finish();
                                         } catch (IOException e) {
                                             e.printStackTrace();
@@ -518,6 +520,7 @@ public class GetLocation extends AppCompatActivity implements GoogleApiClient.Co
                                     getCity(mLocation.getLatitude(), mLocation.getLongitude());
                                     LocationPrefs.getInstance(GetLocation.this).setLocation(new debugbridge.mybooks.Model.Location(mLocation.getLatitude(), mLocation.getLongitude()));
                                     startActivity(new Intent(GetLocation.this, MainActivity.class));
+                                    overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
                                     GetLocation.this.finish();
                                 } catch (IOException e) {
                                     e.printStackTrace();

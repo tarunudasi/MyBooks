@@ -231,9 +231,11 @@ public class RBooks extends Fragment {
         switch (item.getItemId()) {
             case R.id.action_search:
                 startActivityForResult(new Intent(getActivity(), SearchableActivity.class),SEARCH_REQUEST);
+                getActivity().overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
                 return true;
             case R.id.action_location:
                 startActivityForResult(new Intent(getActivity(), ChangeLocation.class),CHANGE_LOCATION);
+                getActivity().overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
