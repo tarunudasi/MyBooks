@@ -26,7 +26,7 @@ public class Splash_screen extends AppCompatActivity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent i = new Intent(Splash_screen.this, GetLocation.class);
+                Intent i = new Intent(Splash_screen.this, Login_screen.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
 

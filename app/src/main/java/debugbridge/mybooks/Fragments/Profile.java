@@ -1,5 +1,6 @@
 package debugbridge.mybooks.Fragments;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -15,12 +16,14 @@ import android.widget.TextView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 
+import debugbridge.mybooks.Activities.Login_screen;
 import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.R;
+import debugbridge.mybooks.SharedPrefs.UserData;
 
 
 public class Profile extends Fragment {
-    TextView name,phone,address,mybooks,termncondition,logout;
+    TextView name, phone, mybooks, termncondition, logout;
     ImageView imageView;
 
     @Override
@@ -36,11 +39,12 @@ public class Profile extends Fragment {
 
         name = (TextView) view.findViewById(R.id.name);
         phone = (TextView) view.findViewById(R.id.phone);
-        address = (TextView) view.findViewById(R.id.address);
         imageView = (ImageView) view.findViewById(R.id.profile_image_view);
 
         ColorGenerator generator = ColorGenerator.MATERIAL;
         int color = generator.getRandomColor();
+
+        name.setText(UserData.getInstance(getContext()).getUser().getName());
 
         TextDrawable drawable = TextDrawable.builder()
                 .beginConfig()
@@ -49,6 +53,7 @@ public class Profile extends Fragment {
                 .buildRound(name.getText().toString().substring(0,1).toUpperCase(), color);
 
         imageView.setImageDrawable(drawable);
+        phone.setText(UserData.getInstance(getContext()).getUser().getMobile());
 
         /******On click Edit profile view*************/
 
@@ -74,12 +79,6 @@ public class Profile extends Fragment {
 });*/
 
         mybooks = (TextView) view.findViewById(R.id.my_books);
-
-
-
-        /**on click my books***/
-
-
         mybooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,8 +88,6 @@ public class Profile extends Fragment {
 
 
         termncondition = (TextView) view.findViewById(R.id.terms_condition);
-        /**** on click terms and condition **/
-
 
         /*termncondition.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,18 +109,17 @@ public class Profile extends Fragment {
 
             }
         });*/
-        logout = (TextView) view.findViewById(R.id.log_out);
 
-        /******* on click logout */
-        /*logout.setOnClickListener(new View.OnClickListener() {
+        logout = (TextView) view.findViewById(R.id.log_out);
+        logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getActivity().getApplicationContext(), Login_screen.class);
-                startActivity(intent);
+                startActivity(new Intent(getActivity().getApplicationContext(), Login_screen.class));
+                UserData.getInstance(getContext()).setLogout();
+                getActivity().overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
                 getActivity().finish();
-
             }
-        });*/
+        });
 
         return view;
 
