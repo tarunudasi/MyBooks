@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@android:color/white"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Mobile Verification !"
+        android:textColor="@color/outline"
+        android:layout_gravity="center"
+        android:textSize="30sp"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/verify_number"
+            android:lines="1"
+            android:inputType="number"
+            android:maxLength="10"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:hint="Mobile Number"
+            android:background="@drawable/login_edit_text"
+            android:textSize="18sp"
+            android:padding="14dp"
+            android:textColorHint="@color/outline"
+            android:textColor="@color/outline"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <Button
+            android:id="@+id/verify_button"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/login_button"
+            android:inputType="textCapCharacters"
+            android:text="Verify Number"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:padding="14dp"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/login_layout"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/outline"
+            android:text="Already have an Account ? "/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/outline"
+            android:textStyle="bold"
+            android:text="Log In"
+            android:id="@+id/verify_login"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
