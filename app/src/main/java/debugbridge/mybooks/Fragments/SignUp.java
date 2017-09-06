@@ -38,7 +38,6 @@ public class SignUp extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
-
         register_name = (EditText) view.findViewById(R.id.register_name);
         register_email = (EditText) view.findViewById(R.id.register_email);
         register_password = (EditText) view.findViewById(R.id.register_password);
@@ -144,7 +143,7 @@ public class SignUp extends android.support.v4.app.Fragment {
 
     private void verifyUser(String email, String  name){
         getActivity().getSupportFragmentManager().popBackStack();
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         Fragment fragment = new VerifyUser();

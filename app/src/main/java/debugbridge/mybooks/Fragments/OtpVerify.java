@@ -2,9 +2,12 @@ package debugbridge.mybooks.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.victor.loading.book.BookLoading;
 
 import java.util.HashMap;
@@ -26,9 +34,11 @@ import java.util.Map;
 import debugbridge.mybooks.Activities.GetLocation;
 import debugbridge.mybooks.AppVolley.SingletonVolley;
 import debugbridge.mybooks.Model.User;
+import debugbridge.mybooks.MyReceiver.MySMSBroadcastReceiver;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.SharedPrefs.UserData;
 import debugbridge.mybooks.Utility.UrlConstant;
+import debugbridge.mybooks.listener.OnSmsReceived;
 
 public class OtpVerify extends Fragment{
 
@@ -64,7 +74,42 @@ public class OtpVerify extends Fragment{
             }
         });
 
+        getOtp();
+
         return view;
+    }
+
+    private void getOtp(){
+        SmsRetrieverClient client = SmsRetriever.getClient(getContext());
+
+// Starts SmsRetriever, waits for ONE matching SMS message until timeout
+// (5 minutes).
+        Task<Void> task = client.startSmsRetriever();
+
+// Listen for success/failure of the start Task.
+        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                final MySMSBroadcastReceiver receiver = new MySMSBroadcastReceiver();
+                getActivity().registerReceiver(receiver, new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION));
+                receiver.setOnSmsReceivedListener(new OnSmsReceived() {
+                    @Override
+                    public void onOtpReceived(String otp) {
+                        otp_number.setText(otp);
+                        otp_button.performClick();
+                        getActivity().unregisterReceiver(receiver);
+                    }
+                });
+            }
+        });
+
+        task.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("SMS Failed","Failed to start retriever");
+            }
+        });
+
     }
 
     private void verifyOTP(final String otp){

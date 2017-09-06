@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import debugbridge.mybooks.R;
 
-public class Splash_screen extends AppCompatActivity {
+public class Splash extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 3000;
 
     @Override
@@ -26,7 +26,7 @@ public class Splash_screen extends AppCompatActivity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent i = new Intent(Splash_screen.this, Login_screen.class);
+                Intent i = new Intent(Splash.this, Login.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
 

@@ -38,7 +38,7 @@ import debugbridge.mybooks.SharedPrefs.UserData;
 import debugbridge.mybooks.Utility.UrlConstant;
 
 
-public class Login_screen extends AppCompatActivity {
+public class Login extends AppCompatActivity {
     private EditText email, password;
     private TextView signup;
     private AppCompatButton login;
@@ -67,7 +67,7 @@ public class Login_screen extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(R.anim.right_enter, R.anim.slide_out);
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                fragmentTransaction.add(R.id.content, new SignUp());
+                fragmentTransaction.replace(R.id.login_content, new SignUp());
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
@@ -118,7 +118,7 @@ public class Login_screen extends AppCompatActivity {
                 public void onResponse(String response) {
                     if (response.trim().equals("unsuccessful")){
                         progressDialog.dismiss();
-                        Toast.makeText(Login_screen.this, "Wrong Email or Password", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "Wrong Email or Password", Toast.LENGTH_SHORT).show();
                         return;
                     }
                         try {
@@ -133,7 +133,7 @@ public class Login_screen extends AppCompatActivity {
                             }
 
                             User user = new User(object.getString("email"), object.getString("name"), object.getString("mobile"), object.getString("verified"));
-                            UserData.getInstance(Login_screen.this).setLogin(user);
+                            UserData.getInstance(Login.this).setLogin(user);
                             openProfile();
 
                         } catch (JSONException e) {
@@ -146,7 +146,7 @@ public class Login_screen extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     progressDialog.dismiss();
-                    Toast.makeText(Login_screen.this, error.toString(), Toast.LENGTH_LONG ).show();
+                    Toast.makeText(Login.this, error.toString(), Toast.LENGTH_LONG ).show();
                 }
             }){
                 @Override
@@ -172,7 +172,7 @@ public class Login_screen extends AppCompatActivity {
     }
 
     private void openProfile(){
-        Intent login = new Intent(Login_screen.this, GetLocation.class);
+        Intent login = new Intent(Login.this, GetLocation.class);
         startActivity(login);
         overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
         finish();

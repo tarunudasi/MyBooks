@@ -2,14 +2,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content"
+    android:id="@+id/login_content"
     android:orientation="vertical"
+    android:clickable="true"
     android:focusableInTouchMode="true"
     android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Activities.Login_screen"
+    tools:context=".Activities.Login"
     tools:showIn="@layout/login_activity">
 
     <RelativeLayout

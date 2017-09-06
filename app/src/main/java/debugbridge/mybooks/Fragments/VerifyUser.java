@@ -1,10 +1,15 @@
 package debugbridge.mybooks.Fragments;
 
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.IntentSender;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +24,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.credentials.Credential;
+import com.google.android.gms.auth.api.credentials.HintRequest;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.victor.loading.book.BookLoading;
 
 import java.util.HashMap;
@@ -28,12 +38,17 @@ import debugbridge.mybooks.AppVolley.SingletonVolley;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.Utility.UrlConstant;
 
+import static android.app.Activity.RESULT_OK;
+import static android.content.ContentValues.TAG;
+
 public class VerifyUser extends Fragment{
 
+    private static final int RESOLVE_HINT = 5034;
     private TextView verify_login;
     private EditText verify_number;
     private Button verify_button;
     private String email, name;
+    private GoogleApiClient apiClient;
 
     @Nullable
     @Override
@@ -48,6 +63,36 @@ public class VerifyUser extends Fragment{
             email = bundle.getString("email");
             name = bundle.getString("name");
         }
+
+        //-----------------------------------------------------------
+
+
+
+        HintRequest hintRequest = new HintRequest.Builder()
+                .setPhoneNumberIdentifierSupported(true)
+                .build();
+
+        apiClient = new GoogleApiClient.Builder(getContext())
+                .addApi(Auth.CREDENTIALS_API)
+                .enableAutoManage(getActivity(), new GoogleApiClient.OnConnectionFailedListener() {
+                    @Override
+                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                        Log.e(TAG, "Client connection failed: " + connectionResult.getErrorMessage());
+                    }
+                }).build();
+
+
+        PendingIntent intent = Auth.CredentialsApi.getHintPickerIntent(
+                apiClient, hintRequest);
+
+        try {
+            startIntentSenderForResult(intent.getIntentSender(),
+                    RESOLVE_HINT, null, 0, 0, 0, null);
+        } catch (IntentSender.SendIntentException e) {
+            e.printStackTrace();
+        }
+
+        // -----------------------------------------------------
 
         verify_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +113,27 @@ public class VerifyUser extends Fragment{
         });
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (apiClient != null){
+            apiClient.stopAutoManage(getActivity());
+            apiClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RESOLVE_HINT) {
+            if (resultCode == RESULT_OK) {
+                Credential credential = data.getParcelableExtra(Credential.EXTRA_KEY);
+
+                Log.e("got it", credential.getId());
+                // credential.getId();  <-- will need to process phone number string
+            }
+        }
     }
 
     private void verifyUser(final String mobile, final String email){

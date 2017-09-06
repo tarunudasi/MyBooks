@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="@android:color/white"
@@ -31,17 +31,35 @@
             android:textStyle="bold"
             android:id="@+id/name"/>
 
-        <TextView
-            android:padding="10dp"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_marginBottom="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:text="XXXXXXXXXX"
-            android:textStyle="bold"
-            android:id="@+id/phone"/>
+            android:layout_gravity="center">
+
+            <TextView
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:text="XXXXXXXXXX"
+                android:textStyle="bold"
+                android:id="@+id/phone"/>
+
+            <TextView
+                android:id="@+id/change_number"
+                android:background="@android:color/white"
+                android:text="Change"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -51,8 +69,8 @@
 
         <LinearLayout
             android:padding="20dp"
+            android:id="@+id/my_books"
             android:gravity="center_vertical"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -72,10 +90,43 @@
                 android:text="@string/MYBOOKS"
                 android:textSize="16dp"
                 android:textStyle="bold"
-                android:layout_marginLeft="24dp"
-                android:id="@+id/my_books" />
+                android:layout_marginLeft="24dp" />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+
+        <LinearLayout
+            android:padding="20dp"
+            android:id="@+id/change_password"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:tint="@android:color/black"
+                android:src="@drawable/ic_edit" />
+
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:text="Change Password"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="24dp" />
+
+        </LinearLayout>
+
 
         <View
             android:layout_width="match_parent"
@@ -85,7 +136,7 @@
         <LinearLayout
             android:padding="20dp"
             android:gravity="center_vertical"
-            android:layout_marginTop="10dp"
+            android:id="@+id/terms_condition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -105,8 +156,7 @@
                 android:text="@string/termsncondi"
                 android:textStyle="bold"
                 android:textSize="16dp"
-                android:layout_marginLeft="24dp"
-                android:id="@+id/terms_condition" />
+                android:layout_marginLeft="24dp" />
 
         </LinearLayout>
 
@@ -117,8 +167,8 @@
 
 
         <LinearLayout
+            android:id="@+id/log_out"
             android:padding="20dp"
-            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -140,8 +190,7 @@
                 android:text="@string/logout"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:layout_marginLeft="24dp"
-                android:id="@+id/log_out"/>
+                android:layout_marginLeft="24dp"/>
 
         </LinearLayout>
 
@@ -153,4 +202,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</android.support.v4.widget.NestedScrollView>
