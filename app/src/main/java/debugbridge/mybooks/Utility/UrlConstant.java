@@ -19,5 +19,7 @@ public class UrlConstant {
     public static final String SEND_OTP = BASE + "sendOtp.php";
     public static final String VERIFY_OTP = BASE + "verifyUserOtp.php";
     public static final String CHANGE_PASSWORD = BASE + "changePassword.php";
+    public static final String CHANGE_OTP = BASE + "changeOtp.php";
+    public static final String CHANGE_MOBILE = BASE + "changeMobile.php";
 
 }

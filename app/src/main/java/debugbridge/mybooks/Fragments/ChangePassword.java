@@ -1,6 +1,7 @@
 package debugbridge.mybooks.Fragments;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -92,7 +93,7 @@ public class ChangePassword extends Fragment {
         BookLoading bookLoading = (BookLoading) progressDialog.getWindow().findViewById(R.id.book_loading_progress);
         bookLoading.start();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlConstant.CHANGE_PASSWORD,
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlConstant.CHANGE_PASSWORD,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -123,6 +124,13 @@ public class ChangePassword extends Fragment {
                 return params;
             }
         };
+
+        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                stringRequest.cancel();
+            }
+        });
 
         stringRequest.setShouldCache(false);
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

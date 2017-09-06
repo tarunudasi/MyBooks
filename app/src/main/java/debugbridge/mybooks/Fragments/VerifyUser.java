@@ -2,6 +2,7 @@ package debugbridge.mybooks.Fragments;
 
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
@@ -148,7 +149,7 @@ public class VerifyUser extends Fragment{
         BookLoading bookLoading = (BookLoading) progressDialog.getWindow().findViewById(R.id.book_loading_progress);
         bookLoading.start();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlConstant.SEND_OTP,
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlConstant.SEND_OTP,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -181,6 +182,13 @@ public class VerifyUser extends Fragment{
             }
 
         };
+
+        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                stringRequest.cancel();
+            }
+        });
 
         stringRequest.setShouldCache(false);
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

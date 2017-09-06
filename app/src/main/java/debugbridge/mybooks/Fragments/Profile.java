@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,7 +25,7 @@ import debugbridge.mybooks.R;
 import debugbridge.mybooks.SharedPrefs.UserData;
 
 
-public class Profile extends Fragment {
+public class Profile extends Fragment{
     private TextView name, phone, change_number;
     private LinearLayout log_out, terms_condition, my_books, change_password;
     private ImageView imageView;
@@ -49,7 +50,12 @@ public class Profile extends Fragment {
         change_number.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.right_enter, R.anim.slide_out);
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.add(R.id.profile_content, new ChangeMobile());
+                fragmentTransaction.addToBackStack(Profile.class.getName());
+                fragmentTransaction.commit();
             }
         });
 
@@ -57,9 +63,9 @@ public class Profile extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
+                fragmentTransaction.setCustomAnimations(R.anim.right_enter, R.anim.slide_out);
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                fragmentTransaction.add(R.id.content, new ChangePassword());
+                fragmentTransaction.add(R.id.profile_content, new ChangePassword());
                 fragmentTransaction.addToBackStack(Profile.class.getName());
                 fragmentTransaction.commit();
 
@@ -148,8 +154,7 @@ public class Profile extends Fragment {
 
         return view;
 
-}
-
+    }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
@@ -165,5 +170,17 @@ public class Profile extends Fragment {
         for (int i = 0 ; i < menu.size(); i++){
             menu.getItem(i).setVisible(false);
         }
+
+        if (phone != null)
+            phone.setText(UserData.getInstance(getContext()).getUser().getMobile());
+
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity()
+                .getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+
+        inputMethodManager.hideSoftInputFromWindow(
+                getActivity().getCurrentFocus()
+                        .getWindowToken(), 0);
+
     }
+
 }

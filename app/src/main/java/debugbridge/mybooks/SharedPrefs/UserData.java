@@ -37,13 +37,6 @@ public class UserData {
         editor.commit();
     }
 
-    public void setUserMobile(String mobile){
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(MOBILE, mobile);
-        editor.putString(VERIFIED, "1");
-        editor.commit();
-    }
-
     public void setLogout(){
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
@@ -60,6 +53,12 @@ public class UserData {
 
     public boolean checkLogin(){
         return preferences.getBoolean(LOGIN, false);
+    }
+
+    public void changeMobile(String mobile){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(MOBILE, mobile);
+        editor.commit();
     }
 
 }

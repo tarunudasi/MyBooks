@@ -24,7 +24,7 @@ import debugbridge.mybooks.Utility.ImageHelper;
 
 ;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     private BottomNavigationView navigation;
     private FloatingActionButton button;
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         String backStateName =  fragment.getClass().getName();
         FragmentManager manager = getSupportFragmentManager();
 
-        boolean fragmentPopped = manager.popBackStackImmediate (backStateName, 0);
+        boolean fragmentPopped = manager.popBackStackImmediate(backStateName, 0);
 //        fragment not in back stack, create it.
         if (!fragmentPopped && manager.findFragmentByTag(backStateName) == null){
             FragmentTransaction ft = manager.beginTransaction();
