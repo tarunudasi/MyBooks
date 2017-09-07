@@ -9,7 +9,6 @@
     android:layout_gravity="center">
 
     <TextView
-        android:id="@+id/signup_text"
         android:layout_marginTop="20dp"
         android:text="Let's Get Started !"
         android:textSize="35sp"
@@ -98,7 +97,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/login_layout"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:padding="10dp"

@@ -1,26 +1,14 @@
 <resources>
     <string name="app_name">RBooks</string>
     <string name="title_my_books">R Books</string>
-    <string name="title_sell_books">Sell Books</string>
     <string name="title_profile">Profile</string>
-    <string name="title_activity_book_description">BookDescription</string>
-    <string name="action_settings">Settings</string>
 
 
-    <string name="Home">Home</string>
-    <string name="Profile">Profile</string>
-    <string name="add">Add</string>
-    <string name="Nmae">NAME:</string>
-    <string name="phone">8888899999</string>it
+    it
     <string name="MYBOOKS">My Books</string>
     <string name="termsncondi">Terms &amp; Condition</string>
     <string name="logout">Logout</string>
-    <string name="description">DESCRIPTION</string>
     <string name="category">CATEGORY</string>
-    <string name="phoneno">PHONE NO:</string>
-    <string name="contactperson">CONTACT DETAILS:</string>
-    <string name="place">PLACE:</string>
-    <string name="Termsncondi">TERMS AND CONDITION </string>
     <string name="search">Search</string>
     <string name="search_hint">Search</string>
     >>>>>>> Stashed changes

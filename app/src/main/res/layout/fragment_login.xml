@@ -106,8 +106,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/outline"
-                android:text="Forgot Password ?"
-                android:id="@+id/forgot_password"/>
+                android:text="Forgot Password ?" />
 
         </LinearLayout>
 
