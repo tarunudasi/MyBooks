@@ -113,6 +113,12 @@ public class Profile extends Fragment{
         my_books.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.right_enter, R.anim.slide_out);
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.add(R.id.profile_content, new MyBooks());
+                fragmentTransaction.addToBackStack(Profile.class.getName());
+                fragmentTransaction.commit();
 
             }
         });

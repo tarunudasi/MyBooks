@@ -178,6 +178,7 @@ public class Login extends Fragment {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.hide(Login.this);
         Fragment fragment = new VerifyUser();
         Bundle bundle = new Bundle();
         bundle.putString("email", email);

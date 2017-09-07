@@ -65,7 +65,7 @@ public class RBooks extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_mybooks,container,false);
+        View view = inflater.inflate(R.layout.fragment_rbooks,container,false);
 
         /*((MainActivity)getActivity()).subtitle.setVisibility(View.VISIBLE);
         ((MainActivity)getActivity()).toolbar_image.setVisibility(View.VISIBLE);

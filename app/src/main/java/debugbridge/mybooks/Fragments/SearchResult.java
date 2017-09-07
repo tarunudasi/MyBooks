@@ -42,7 +42,7 @@ import debugbridge.mybooks.Activities.BookDescription;
 import debugbridge.mybooks.Adapter.ViewBooksRecyclerAdapter;
 import debugbridge.mybooks.AppVolley.SingletonVolley;
 import debugbridge.mybooks.MainActivity;
-import debugbridge.mybooks.Model.BookLists;
+import debugbridge.mybooks.Model.Books;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.SharedPrefs.LocationPrefs;
 import debugbridge.mybooks.Utility.UrlConstant;
@@ -180,7 +180,7 @@ public class SearchResult extends Fragment{
         adapter.setOnItemClick(new OnClickListener() {
             @Override
             public void onItemClick(int position, View view) {
-                BookLists bookLists = (BookLists) list.get(position);
+                Books bookLists = (Books) list.get(position);
                 Intent intent = new Intent(getActivity(), BookDescription.class);
                 intent.putExtra("data", bookLists);
                 startActivity(intent);
@@ -272,7 +272,7 @@ public class SearchResult extends Fragment{
 
                             for (int i = 0 ; i < jsonArray.length() ; i++){
                                 JSONObject object = jsonArray.getJSONObject(i);
-                                list.add(new BookLists(object.getString("id"),object.getString("name"),object.getString("amount"),object.getString("description"),object.getString("author"),object.getString("publication"),object.getString("img"),object.getString("user"), object.getString("latitude"), object.getString("longitude")));
+                                list.add(new Books(object.getString("id"),object.getString("name"),object.getString("amount"),object.getString("description"),object.getString("author"),object.getString("publication"),object.getString("img"),object.getString("user"), object.getString("latitude"), object.getString("longitude")));
                                 adapter.notifyDataSetChanged();
                             }
 

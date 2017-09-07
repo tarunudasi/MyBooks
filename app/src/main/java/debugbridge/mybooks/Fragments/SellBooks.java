@@ -9,7 +9,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -58,6 +57,7 @@ import debugbridge.mybooks.Model.MainCategory;
 import debugbridge.mybooks.Model.SubCategory;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.SharedPrefs.LocationPrefs;
+import debugbridge.mybooks.SharedPrefs.UserData;
 import debugbridge.mybooks.Utility.ImageHelper;
 import debugbridge.mybooks.Utility.UrlConstant;
 
@@ -134,13 +134,6 @@ public class SellBooks extends Fragment implements AdapterView.OnItemSelectedLis
         sell_location.setText(loc);
 
         //Log.e(TAG, city + state + country);
-
-        float[] results = new float[1];
-        Location.distanceBetween(latitude, longitude, 22.7441, 77.7370, results);
-        float distanceInMeters = results[0];
-        boolean isWithin10km = distanceInMeters < 10000;
-
-        //Log.e(TAG , "isWithin10km " + isWithin10km);
 
     }
 
@@ -447,6 +440,7 @@ public class SellBooks extends Fragment implements AdapterView.OnItemSelectedLis
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
                 bitmapImage = ((BitmapDrawable)sell_book.getDrawable()).getBitmap();
+                params.put("email", UserData.getInstance(getContext()).getUser().getEmail());
                 params.put("image", getStringImage(ImageHelper.getResizedBitmapLessThanMaxSize(bitmapImage,50)));
                 params.put("category",category_id);
                 params.put("title",book_title);

@@ -28,7 +28,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import debugbridge.mybooks.AppVolley.SingletonVolley;
-import debugbridge.mybooks.Model.BookLists;
+import debugbridge.mybooks.Model.Books;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.Utility.UrlConstant;
 
@@ -45,7 +45,7 @@ public class BookDescription extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        BookLists bookLists = (BookLists) getIntent().getSerializableExtra("data");
+        Books bookLists = (Books) getIntent().getSerializableExtra("data");
         getSupportActionBar().setTitle(bookLists.getName());
 
         ImageView imageView = (ImageView) findViewById(R.id.image_collapsing);

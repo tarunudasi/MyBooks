@@ -2,11 +2,11 @@ package debugbridge.mybooks.Model;
 
 import java.io.Serializable;
 
-public class BookLists implements Serializable {
+public class Books implements Serializable {
 
-    private String id, name, amount, description, author, publication, img, user, latitude, longitude;
+    private String id, name, amount, description, author, publication, img, user, latitude, longitude, verify, sold;
 
-    public BookLists(String id, String name, String amount, String description, String author, String publication, String img, String user, String latitude, String longitude) {
+    public Books(String id, String name, String amount, String description, String author, String publication, String img, String user, String latitude, String longitude) {
         this.id = id;
         this.name = name;
         this.amount = amount;
@@ -17,6 +17,37 @@ public class BookLists implements Serializable {
         this.user = user;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public Books(String id, String name, String amount, String description, String author, String publication, String img, String user, String latitude, String longitude, String verify, String sold) {
+        this.id = id;
+        this.name = name;
+        this.amount = amount;
+        this.description = description;
+        this.author = author;
+        this.publication = publication;
+        this.img = img;
+        this.user = user;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.verify = verify;
+        this.sold = sold;
+    }
+
+    public String getVerify() {
+        return verify;
+    }
+
+    public void setVerify(String verify) {
+        this.verify = verify;
+    }
+
+    public String getSold() {
+        return sold;
+    }
+
+    public void setSold(String sold) {
+        this.sold = sold;
     }
 
     public String getLatitude() {

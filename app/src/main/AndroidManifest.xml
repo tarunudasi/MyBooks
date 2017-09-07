@@ -59,6 +59,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
+            android:name=".Activities.MyBookDescription"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name=".Activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
