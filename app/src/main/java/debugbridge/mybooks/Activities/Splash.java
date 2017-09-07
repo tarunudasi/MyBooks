@@ -26,7 +26,7 @@ public class Splash extends AppCompatActivity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent i = new Intent(Splash.this, Login.class);
+                Intent i = new Intent(Splash.this, LoginActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
 

@@ -159,7 +159,7 @@ public class SignUp extends android.support.v4.app.Fragment {
         bundle.putString("email", email);
         bundle.putString("name", name);
         fragment.setArguments(bundle);
-        fragmentTransaction.add(R.id.content, fragment);
+        fragmentTransaction.add(R.id.login_content, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 
-import debugbridge.mybooks.Activities.Login;
+import debugbridge.mybooks.Activities.LoginActivity;
 import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.SharedPrefs.UserData;
@@ -145,7 +145,7 @@ public class Profile extends Fragment{
         log_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity().getApplicationContext(), Login.class));
+                startActivity(new Intent(getActivity().getApplicationContext(), LoginActivity.class));
                 UserData.getInstance(getContext()).setLogout();
                 getActivity().overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
                 getActivity().finish();

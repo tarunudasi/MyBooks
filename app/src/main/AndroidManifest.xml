@@ -59,7 +59,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".Activities.Login"
+            android:name=".Activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />

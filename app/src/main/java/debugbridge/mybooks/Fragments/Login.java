@@ -1,14 +1,16 @@
-package debugbridge.mybooks.Activities;
+package debugbridge.mybooks.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,67 +31,60 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import debugbridge.mybooks.Activities.GetLocation;
 import debugbridge.mybooks.AppVolley.SingletonVolley;
-import debugbridge.mybooks.Fragments.SignUp;
-import debugbridge.mybooks.Fragments.VerifyUser;
 import debugbridge.mybooks.Model.User;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.SharedPrefs.UserData;
 import debugbridge.mybooks.Utility.UrlConstant;
 
+public class Login extends Fragment {
 
-public class Login extends AppCompatActivity {
     private EditText email, password;
     private TextView signup;
     private AppCompatButton login;
 
+    @Nullable
     @Override
-    protected void onStart() {
-        super.onStart();
-        if (UserData.getInstance(this).checkLogin()){
-            openProfile();
-        }
-    }
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
-
-        email = (EditText) findViewById(R.id.login_email);
-        password = (EditText) findViewById(R.id.login_password);
-        signup = (TextView) findViewById(R.id.sign_up);
-        login = (AppCompatButton) findViewById(R.id.login);
+        email = (EditText) view.findViewById(R.id.login_email);
+        password = (EditText) view.findViewById(R.id.login_password);
+        signup = (TextView) view.findViewById(R.id.sign_up);
+        login = (AppCompatButton) view.findViewById(R.id.login);
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(R.anim.right_enter, R.anim.slide_out);
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                fragmentTransaction.replace(R.id.login_content, new SignUp());
+                fragmentTransaction.add(R.id.login_content, new SignUp());
+                fragmentTransaction.hide(Login.this);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
 
         login.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!(isValidEmail(email.getText()) && email.getText().toString().length() > 0)){
-                        email.setError("Invalid Email Address");
-                        return;
-                    }
-
-                    if (password.getText().length() < 1){
-                        password.setError("Invalid Password");
-                        return;
-                    }
-
-                    userLogin(email.getText().toString(), password.getText().toString());
+            @Override
+            public void onClick(View view) {
+                if (!(isValidEmail(email.getText()) && email.getText().toString().length() > 0)){
+                    email.setError("Invalid Email Address");
+                    return;
                 }
+
+                if (password.getText().length() < 1){
+                    password.setError("Invalid Password");
+                    return;
+                }
+
+                userLogin(email.getText().toString(), password.getText().toString());
+            }
         });
 
+        return view;
     }
 
     public boolean isValidEmail(CharSequence target) {
@@ -100,9 +95,10 @@ public class Login extends AppCompatActivity {
         }
     }
 
+
     private void userLogin(final String email, final String password) {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.full_screen_dialog);
+        final ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.full_screen_dialog);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setCancelable(true);
         progressDialog.show();
@@ -113,14 +109,14 @@ public class Login extends AppCompatActivity {
         bookLoading.start();
 
         final StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlConstant.USER_LOGIN,
-            new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    if (response.trim().equals("unsuccessful")){
-                        progressDialog.dismiss();
-                        Toast.makeText(Login.this, "Wrong Email or Password", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.trim().equals("unsuccessful")){
+                            progressDialog.dismiss();
+                            Toast.makeText(getContext(), "Wrong Email or Password", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray jsonArray = jsonObject.getJSONArray("user");
@@ -133,29 +129,29 @@ public class Login extends AppCompatActivity {
                             }
 
                             User user = new User(object.getString("email"), object.getString("name"), object.getString("mobile"), object.getString("verified"));
-                            UserData.getInstance(Login.this).setLogin(user);
+                            UserData.getInstance(getContext()).setLogin(user);
                             openProfile();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                }
-            },
-            new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    progressDialog.dismiss();
-                    Toast.makeText(Login.this, error.toString(), Toast.LENGTH_LONG ).show();
-                }
-            }){
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String,String> map = new HashMap<>();
-                    map.put("email", email);
-                    map.put("password", password);
-                    return map;
-                }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG ).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> map = new HashMap<>();
+                map.put("email", email);
+                map.put("password", password);
+                return map;
+            }
         };
 
         progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -167,19 +163,19 @@ public class Login extends AppCompatActivity {
 
         stringRequest.setShouldCache(false);
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        SingletonVolley.getInstance(this).addToRequestQueue(stringRequest);
+        SingletonVolley.getInstance(getContext()).addToRequestQueue(stringRequest);
 
     }
 
     private void openProfile(){
-        Intent login = new Intent(Login.this, GetLocation.class);
+        Intent login = new Intent(getActivity(), GetLocation.class);
         startActivity(login);
-        overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
-        finish();
+        getActivity().overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
+        getActivity().finish();
     }
 
     private void verifyUser(String email, String  name){
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         Fragment fragment = new VerifyUser();
@@ -187,12 +183,11 @@ public class Login extends AppCompatActivity {
         bundle.putString("email", email);
         bundle.putString("name", name);
         fragment.setArguments(bundle);
-        fragmentTransaction.add(R.id.content, fragment);
+        fragmentTransaction.add(R.id.login_content, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
+
+
 }
-
-
-

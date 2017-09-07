@@ -1,155 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/login_content"
     android:orientation="vertical"
-    android:clickable="true"
-    android:focusableInTouchMode="true"
     android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Activities.Login"
+    tools:context=".Activities.LoginActivity"
     tools:showIn="@layout/login_activity">
 
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/login_content"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" />
 
-        <ImageView
-            android:id="@+id/login_logo"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:src="@drawable/logo"
-            android:layout_width="match_parent"
-            android:layout_height="200dp" />
-
-
-        <LinearLayout
-            android:layout_above="@+id/register_layout"
-            android:layout_below="@id/login_logo"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <!--<TextView
-            android:text="Welcome"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="@color/outline"
-            android:textSize="50sp"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <TextView
-            android:text="Books Reseller"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="@color/outline"
-            android:textSize="18sp"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content" />
-        -->
-
-
-            <EditText
-            android:gravity="center"
-            android:background="@drawable/login_edit_text"
-            android:layout_gravity="center"
-            android:id="@+id/login_email"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:padding="14dp"
-            android:lines="1"
-            android:inputType="textEmailAddress"
-            android:textColorHint="@color/outline"
-            android:textColor="@color/outline"
-            android:hint="Email Address" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <EditText
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:id="@+id/login_password"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/login_edit_text"
-            android:padding="14dp"
-            android:lines="1"
-            android:textSize="18sp"
-            android:inputType="textPassword"
-            android:textColorHint="@color/outline"
-            android:textColor="@color/outline"
-            android:hint="Password" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <android.support.v7.widget.AppCompatButton
-            android:layout_gravity="center"
-            android:id="@+id/login"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@android:color/white"
-            android:padding="14dp"
-            android:inputType="textCapCharacters"
-            android:background="@drawable/login_button"
-            android:text="Login to My Account"/>
-
-        <TextView
-            android:padding="18dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/outline"
-            android:text="Forgot Password ?"
-            android:id="@+id/forgot_password"/>
-
-    </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/register_layout"
-            android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            android:padding="10dp"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@color/outline"
-                android:text="Don't have an Account ? "/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textColor="@color/outline"
-                android:textStyle="bold"
-                android:text="Register"
-                android:id="@+id/sign_up"/>
-
-        </LinearLayout>
-
-
-    </RelativeLayout>
-
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>
