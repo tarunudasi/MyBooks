@@ -86,29 +86,6 @@ public class Profile extends Fragment{
         imageView.setImageDrawable(drawable);
         phone.setText(UserData.getInstance(getContext()).getUser().getMobile());
 
-        /******On click Edit profile view*************/
-
-        /*editprofile.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-            View popupView = getActivity().getLayoutInflater().inflate(R.layout.edit_custom_dialog_box, null);
-
-            PopupWindow popupWindow = new PopupWindow(popupView,
-                    WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-            popupWindow.setFocusable(true);
-
-            // If you need the PopupWindow to dismiss when when touched outside
-            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-
-            EditText naME=(EditText)popupView.findViewById(R.id.input_name);
-            int location[] = new int[2];
-            popupWindow.showAtLocation(view, Gravity.CENTER,
-                    location[0], location[1] + view.getHeight());
-
-
-    }
-});*/
-
         my_books = (LinearLayout) view.findViewById(R.id.my_books);
         my_books.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,27 +102,6 @@ public class Profile extends Fragment{
 
 
         terms_condition = (LinearLayout) view.findViewById(R.id.terms_condition);
-
-        /*termncondition.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                View popupView = getActivity().getLayoutInflater().inflate(R.layout.termsncondition, null);
-
-                PopupWindow popupWindow = new PopupWindow(popupView,
-                        WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                popupWindow.setFocusable(true);
-
-                // If you need the PopupWindow to dismiss when when touched outside
-                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-                TextView termsncondition=(TextView)popupView.findViewById(R.id.termscondi);
-
-                int location[] = new int[2];
-                popupWindow.showAtLocation(view, Gravity.CENTER,
-                        location[0], location[1] + view.getHeight());
-
-
-            }
-        });*/
 
         log_out = (LinearLayout) view.findViewById(R.id.log_out);
         log_out.setOnClickListener(new View.OnClickListener() {
@@ -180,12 +136,8 @@ public class Profile extends Fragment{
         if (phone != null)
             phone.setText(UserData.getInstance(getContext()).getUser().getMobile());
 
-        InputMethodManager inputMethodManager = (InputMethodManager) getActivity()
-                .getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
-
-        inputMethodManager.hideSoftInputFromWindow(
-                getActivity().getCurrentFocus()
-                        .getWindowToken(), 0);
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
 
     }
 

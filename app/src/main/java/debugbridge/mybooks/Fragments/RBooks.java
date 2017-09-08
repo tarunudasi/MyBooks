@@ -67,19 +67,6 @@ public class RBooks extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rbooks,container,false);
 
-        /*((MainActivity)getActivity()).subtitle.setVisibility(View.VISIBLE);
-        ((MainActivity)getActivity()).toolbar_image.setVisibility(View.VISIBLE);
-        ((MainActivity)getActivity()).title.setText("Bhopal");
-        ((MainActivity)getActivity()).subtitle.setText("Madhya Pradesh");
-*/
-        /*((MainActivity)getActivity()).title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
-
         img = new ArrayList<>();
         getSlider();
         list = new ArrayList<>();
@@ -195,22 +182,6 @@ public class RBooks extends Fragment {
     public void onPrepareOptionsMenu(Menu menu) {
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        /*Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.main_toolbar);
-        ((MainActivity)getActivity()).setSupportActionBar(toolbar);
-
-        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //((MainActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-        //((MainActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        toolbar.setNavigationIcon(R.drawable.ic_my_location);  //your icon
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Do whatever you want to do here
-                startActivityForResult(new Intent(getActivity(), ChangeLocation.class),CHANGE_LOCATION);
-            }
-        });
-*/
         try {
             getCity(LocationPrefs.getInstance(getContext()).getLocation().getLatitude(),
                     LocationPrefs.getInstance(getContext()).getLocation().getLongitude());

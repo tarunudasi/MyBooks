@@ -60,12 +60,6 @@ public class BooksList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book_list, container, false);
-
-        /*((MainActivity)getActivity()).title.setText("Book Categories");
-        ((MainActivity)getActivity()).subtitle.setVisibility(View.GONE);
-        ((MainActivity)getActivity()).toolbar_image.setVisibility(View.GONE);
-*/
-
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             id = bundle.getString("id");

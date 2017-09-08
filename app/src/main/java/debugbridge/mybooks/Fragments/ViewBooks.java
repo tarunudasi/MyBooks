@@ -96,10 +96,6 @@ public class ViewBooks extends Fragment{
             }
         });
 
-        /*((MainActivity)getActivity()).title.setText(title);
-        ((MainActivity)getActivity()).subtitle.setVisibility(View.GONE);
-        ((MainActivity)getActivity()).toolbar_image.setVisibility(View.GONE);
-*/
         list = new ArrayList<>();
 
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);

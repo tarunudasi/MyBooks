@@ -8,14 +8,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -25,11 +29,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.victor.loading.book.BookLoading;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import debugbridge.mybooks.Adapter.SpinnerCountryArrayAdapter;
 import debugbridge.mybooks.AppVolley.SingletonVolley;
 import debugbridge.mybooks.MainActivity;
+import debugbridge.mybooks.Model.Country;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.SharedPrefs.UserData;
 import debugbridge.mybooks.Utility.UrlConstant;
@@ -38,6 +52,10 @@ public class ChangeMobile extends Fragment {
 
     private EditText change_number;
     private Button change_number_button;
+    private Spinner countrySpinner;
+    private SpinnerCountryArrayAdapter adapter;
+    private List<Country> countryList;
+    private TextView countryCodeTextView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +68,46 @@ public class ChangeMobile extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_change_mobile, container, false);
 
+        countryList = new ArrayList<>();
+
+        try {
+            InputStream inputStream = getResources().openRawResource(R.raw.country_codes);
+            byte[] b = new byte[inputStream.available()];
+            inputStream.read(b);
+
+            JSONArray jsonArray = new JSONArray(new String(b));
+
+            for (int i = 0 ; i< jsonArray.length() ; i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Log.e("country", jsonObject.getString("dial_code"));
+                countryList.add(new Country(jsonObject.getString("name"), jsonObject.getString("dial_code")));
+            }
+
+        } catch (JSONException e) {
+            Log.e(this.getClass().getName(), e.toString());
+        } catch (IOException e){
+            Log.e(this.getClass().getName(), e.toString());
+        }
+
+        countryCodeTextView = (TextView) view.findViewById(R.id.country_code_text_view);
+        countrySpinner = (Spinner) view.findViewById(R.id.country_spinner);
+        adapter = new SpinnerCountryArrayAdapter(getContext(), android.R.layout.simple_spinner_item, countryList);
+        countrySpinner.setAdapter(adapter);
+
+        countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                countryCodeTextView.setText(countryList.get(position).getCountryCode());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         change_number = (EditText) view.findViewById(R.id.change_number);
         change_number_button = (Button) view.findViewById(R.id.change_number_button);
 
@@ -60,7 +118,7 @@ public class ChangeMobile extends Fragment {
                     change_number.setError("Enter valid Number");
                     return;
                 }
-                changeMobile(change_number.getText().toString());
+                changeMobile(countryCodeTextView.getText() + change_number.getText().toString());
             }
         });
 

@@ -1,15 +1,14 @@
 <resources>
     <string name="app_name">RBooks</string>
-    <string name="title_my_books">R Books</string>
+    <string name="title_my_books">Home</string>
     <string name="title_profile">Profile</string>
 
 
-    it
     <string name="MYBOOKS">My Books</string>
     <string name="termsncondi">Terms &amp; Condition</string>
     <string name="logout">Logout</string>
     <string name="category">CATEGORY</string>
     <string name="search">Search</string>
     <string name="search_hint">Search</string>
-    >>>>>>> Stashed changes
+
 </resources>
