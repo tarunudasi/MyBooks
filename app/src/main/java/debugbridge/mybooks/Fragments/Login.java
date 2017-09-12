@@ -1,5 +1,6 @@
 package debugbridge.mybooks.Fragments;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +36,7 @@ import java.util.Map;
 import debugbridge.mybooks.Activities.GetLocation;
 import debugbridge.mybooks.AppVolley.SingletonVolley;
 import debugbridge.mybooks.Model.User;
+import debugbridge.mybooks.MyReceiver.ConnectivityReceiver;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.SharedPrefs.UserData;
 import debugbridge.mybooks.Utility.UrlConstant;
@@ -43,6 +46,7 @@ public class Login extends Fragment {
     private EditText email, password;
     private TextView signup;
     private AppCompatButton login;
+    private Button forgot_password_button;
 
     @Nullable
     @Override
@@ -53,6 +57,20 @@ public class Login extends Fragment {
         password = (EditText) view.findViewById(R.id.login_password);
         signup = (TextView) view.findViewById(R.id.sign_up);
         login = (AppCompatButton) view.findViewById(R.id.login);
+        forgot_password_button = (Button) view.findViewById(R.id.forgot_password_button);
+
+        forgot_password_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.right_enter, R.anim.slide_out);
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.add(R.id.login_content, new PasswordRecovery());
+                fragmentTransaction.hide(Login.this);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +98,33 @@ public class Login extends Fragment {
                     return;
                 }
 
-                userLogin(email.getText().toString(), password.getText().toString());
+                if (ConnectivityReceiver.isConnected()) {
+                    userLogin(email.getText().toString(), password.getText().toString());
+                }else {
+                    final Dialog alert = new Dialog(getContext(), R.style.full_screen_dialog);
+                    alert.setContentView(R.layout.internet_customize_alert);
+                    alert.setCancelable(true);
+                    alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            getActivity().finish();
+                        }
+                    });
+                    alert.setCanceledOnTouchOutside(false);
+                    alert.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                            WindowManager.LayoutParams.MATCH_PARENT);
+                    Button button = (Button) alert.getWindow().findViewById(R.id.try_again_internet_button);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (ConnectivityReceiver.isConnected()){
+                                alert.dismiss();
+                            }
+                        }
+                    });
+
+                    alert.show();
+                }
             }
         });
 
@@ -93,6 +137,11 @@ public class Login extends Fragment {
         } else {
             return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
         }
+    }
+
+    public void refreshView(){
+        email.setText("");
+        password.setText("");
     }
 
 
@@ -117,6 +166,9 @@ public class Login extends Fragment {
                             Toast.makeText(getContext(), "Wrong Email or Password", Toast.LENGTH_SHORT).show();
                             return;
                         }
+
+                        refreshView();
+
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray jsonArray = jsonObject.getJSONArray("user");

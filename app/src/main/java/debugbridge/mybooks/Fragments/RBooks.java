@@ -1,5 +1,7 @@
 package debugbridge.mybooks.Fragments;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -16,18 +18,30 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 
+import com.android.volley.Cache;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -38,6 +52,7 @@ import debugbridge.mybooks.AppVolley.SingletonVolley;
 import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.Model.MainCategory;
 import debugbridge.mybooks.Model.Slidder;
+import debugbridge.mybooks.MyReceiver.ConnectivityReceiver;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.SharedPrefs.LocationPrefs;
 import debugbridge.mybooks.Utility.UrlConstant;
@@ -53,7 +68,7 @@ public class RBooks extends Fragment {
     private CategoryRecyclerAdapter categoryRecyclerAdapter;
     private final int SEARCH_REQUEST = 2222;
     private final int CHANGE_LOCATION = 4504;
-
+    private SliderLayout mDemoSlider;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,13 +80,56 @@ public class RBooks extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_rbooks,container,false);
+        final View view = inflater.inflate(R.layout.fragment_rbooks,container,false);
 
+
+        if (!ConnectivityReceiver.isConnected()){
+            final Dialog alert = new Dialog(getContext(), R.style.full_screen_dialog);
+            alert.setContentView(R.layout.internet_customize_alert);
+            alert.setCancelable(true);
+            alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    getActivity().finish();
+                }
+            });
+            alert.setCanceledOnTouchOutside(false);
+            alert.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT);
+            Button button = (Button) alert.getWindow().findViewById(R.id.try_again_internet_button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (ConnectivityReceiver.isConnected()){
+                        alert.dismiss();
+                        initialize(view);
+                    }
+                }
+            });
+
+            alert.show();
+        }else {
+            initialize(view);
+        }
+
+
+        return view;
+    }
+
+    private void initialize(View view){
         img = new ArrayList<>();
-        getSlider();
+        getCategory();
         list = new ArrayList<>();
 
         categoryRecyclerAdapter = new CategoryRecyclerAdapter(list,getContext());
+
+        mDemoSlider = (SliderLayout) view.findViewById(R.id.slider);
+        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Stack);
+        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+        mDemoSlider.setDuration(4000);
+
+        getSlider();
 
         category_recycler_view = (RecyclerView) view.findViewById(R.id.category_recycler_view);
         category_recycler_view.setHasFixedSize(true);
@@ -79,6 +137,7 @@ public class RBooks extends Fragment {
         category_recycler_view.setAdapter(categoryRecyclerAdapter);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         category_recycler_view.setLayoutManager(mLayoutManager);
+        category_recycler_view.setNestedScrollingEnabled(false);
         categoryRecyclerAdapter.setOnItemClick(new OnClickListener() {
             @Override
             public void onItemClick(int position, View view) {
@@ -95,8 +154,6 @@ public class RBooks extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-
-        return view;
     }
 
     private void getSlider(){
@@ -110,6 +167,12 @@ public class RBooks extends Fragment {
                             return;
                         }
 
+//                        list.clear();
+//
+                        img.clear();
+//
+//                        categoryRecyclerAdapter.notifyDataSetChanged();
+
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray jsonArray = jsonObject.getJSONArray("slider");
@@ -119,11 +182,35 @@ public class RBooks extends Fragment {
                                 img.add(object.getString("img"));
                             }
 
-                            list.add(new Slidder(img));
+//                            list.add(new Slidder(img));
+//
+//                            categoryRecyclerAdapter.notifyDataSetChanged();
+//
+//                            getCategory();
 
-                            categoryRecyclerAdapter.notifyDataSetChanged();
 
-                            getCategory();
+                            Slidder slidder = (Slidder) new Slidder(img);
+
+                            HashMap<String,String> url_maps = new HashMap<>();
+
+                            for (int i = 0 ; i < slidder.getList().size() ; i++){
+                                url_maps.put(i+1+"",slidder.getList().get(i).replace(" ","%20"));
+                            }
+
+                            for(String name : url_maps.keySet()){
+                                DefaultSliderView textSliderView = new DefaultSliderView(getContext());
+                                // initialize a SliderLayout
+                                textSliderView
+                                        .description(name)
+                                        .image(url_maps.get(name))
+                                        .setScaleType(BaseSliderView.ScaleType.Fit);
+
+                                //add your extra information
+                                textSliderView.bundle(new Bundle());
+                                textSliderView.getBundle()
+                                        .putString("extra",name);
+                                mDemoSlider.addSlider(textSliderView);
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -135,7 +222,40 @@ public class RBooks extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
             }
-        });
+        }){
+            /*@Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    Cache.Entry cacheEntry = HttpHeaderParser.parseCacheHeaders(response);
+                    if (cacheEntry == null) {
+                        cacheEntry = new Cache.Entry();
+                    }
+                    final long cacheHitButRefreshed = 3 * 60 * 1000; // in 3 minutes cache will be hit, but also refreshed on background
+                    final long cacheExpired = 24 * 60 * 60 * 1000; // in 24 hours this cache entry expires completely
+                    long now = System.currentTimeMillis();
+                    final long softExpire = now + cacheHitButRefreshed;
+                    final long ttl = now + cacheExpired;
+                    cacheEntry.data = response.data;
+                    cacheEntry.softTtl = softExpire;
+                    cacheEntry.ttl = ttl;
+                    String headerValue;
+                    headerValue = response.headers.get("Date");
+                    if (headerValue != null) {
+                        cacheEntry.serverDate = HttpHeaderParser.parseDateAsEpoch(headerValue);
+                    }
+                    headerValue = response.headers.get("Last-Modified");
+                    if (headerValue != null) {
+                        cacheEntry.lastModified = HttpHeaderParser.parseDateAsEpoch(headerValue);
+                    }
+                    cacheEntry.responseHeaders = response.headers;
+                    final String jsonString = new String(response.data,
+                            HttpHeaderParser.parseCharset(response.headers));
+                    return Response.success(new String(jsonString), cacheEntry);
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                }
+            }*/
+        };
 
         SingletonVolley.getInstance(getContext()).addToRequestQueue(stringRequest);
 
@@ -156,6 +276,8 @@ public class RBooks extends Fragment {
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray jsonArray = jsonObject.getJSONArray("categories");
 
+                            list.clear();
+
                             for (int i = 0 ; i < jsonArray.length() ; i++){
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 list.add(new MainCategory(object.getString("id"),object.getString("name"),object.getString("img")));
@@ -172,7 +294,40 @@ public class RBooks extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
             }
-        });
+        }){
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    Cache.Entry cacheEntry = HttpHeaderParser.parseCacheHeaders(response);
+                    if (cacheEntry == null) {
+                        cacheEntry = new Cache.Entry();
+                    }
+                    final long cacheHitButRefreshed = 3 * 60 * 1000; // in 3 minutes cache will be hit, but also refreshed on background
+                    final long cacheExpired = 24 * 60 * 60 * 1000; // in 24 hours this cache entry expires completely
+                    long now = System.currentTimeMillis();
+                    final long softExpire = now + cacheHitButRefreshed;
+                    final long ttl = now + cacheExpired;
+                    cacheEntry.data = response.data;
+                    cacheEntry.softTtl = softExpire;
+                    cacheEntry.ttl = ttl;
+                    String headerValue;
+                    headerValue = response.headers.get("Date");
+                    if (headerValue != null) {
+                        cacheEntry.serverDate = HttpHeaderParser.parseDateAsEpoch(headerValue);
+                    }
+                    headerValue = response.headers.get("Last-Modified");
+                    if (headerValue != null) {
+                        cacheEntry.lastModified = HttpHeaderParser.parseDateAsEpoch(headerValue);
+                    }
+                    cacheEntry.responseHeaders = response.headers;
+                    final String jsonString = new String(response.data,
+                            HttpHeaderParser.parseCharset(response.headers));
+                    return Response.success(new String(jsonString), cacheEntry);
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                }
+            }
+        };
 
         SingletonVolley.getInstance(getContext()).addToRequestQueue(stringRequest);
 
@@ -182,11 +337,17 @@ public class RBooks extends Fragment {
     public void onPrepareOptionsMenu(Menu menu) {
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        try {
-            getCity(LocationPrefs.getInstance(getContext()).getLocation().getLatitude(),
-                    LocationPrefs.getInstance(getContext()).getLocation().getLongitude());
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (ConnectivityReceiver.isConnected()) {
+
+            try {
+                getCity(LocationPrefs.getInstance(getContext()).getLocation().getLatitude(),
+                        LocationPrefs.getInstance(getContext()).getLocation().getLongitude());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else {
+            ((MainActivity)getActivity()).getSupportActionBar().setTitle("R Books");
+            ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(null);
         }
     }
 
@@ -199,18 +360,49 @@ public class RBooks extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.action_search:
-                startActivityForResult(new Intent(getActivity(), SearchableActivity.class),SEARCH_REQUEST);
-                getActivity().overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
-                return true;
-            case R.id.action_location:
-                startActivityForResult(new Intent(getActivity(), ChangeLocation.class),CHANGE_LOCATION);
-                getActivity().overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+
+        if (!ConnectivityReceiver.isConnected()){
+            final Dialog alert = new Dialog(getContext(), R.style.full_screen_dialog);
+            alert.setContentView(R.layout.internet_customize_alert);
+            alert.setCancelable(true);
+            alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    alert.dismiss();
+                }
+            });
+            alert.setCanceledOnTouchOutside(false);
+            alert.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT);
+            Button button = (Button) alert.getWindow().findViewById(R.id.try_again_internet_button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (ConnectivityReceiver.isConnected()){
+                        alert.dismiss();
+                    }
+                }
+            });
+
+            alert.show();
+
+            return super.onOptionsItemSelected(item);
+
+        }else {
+            switch (item.getItemId()) {
+                case R.id.action_search:
+                    startActivityForResult(new Intent(getActivity(), SearchableActivity.class), SEARCH_REQUEST);
+                    getActivity().overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
+                    return true;
+                case R.id.action_location:
+                    startActivityForResult(new Intent(getActivity(), ChangeLocation.class), CHANGE_LOCATION);
+                    getActivity().overridePendingTransition(R.anim.right_enter, R.anim.slide_out);
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
         }
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package debugbridge.mybooks.Fragments;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.IntentFilter;
@@ -37,7 +38,8 @@ import java.util.Map;
 
 import debugbridge.mybooks.AppVolley.SingletonVolley;
 import debugbridge.mybooks.MainActivity;
-import debugbridge.mybooks.MyReceiver.MySMSBroadcastReceiver;
+import debugbridge.mybooks.MyReceiver.ConnectivityReceiver;
+import debugbridge.mybooks.MyReceiver.SMSBroadcastReceiver;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.SharedPrefs.UserData;
 import debugbridge.mybooks.Utility.UrlConstant;
@@ -77,7 +79,33 @@ public class NewOtpVerify extends Fragment {
                     return;
                 }
 
-                verifyOTP(new_otp_number.getText().toString());
+                if (ConnectivityReceiver.isConnected()) {
+                    verifyOTP(new_otp_number.getText().toString());
+                }else {
+                    final Dialog alert = new Dialog(getContext(), R.style.full_screen_dialog);
+                    alert.setContentView(R.layout.internet_customize_alert);
+                    alert.setCancelable(true);
+                    alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            getActivity().finish();
+                        }
+                    });
+                    alert.setCanceledOnTouchOutside(false);
+                    alert.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                            WindowManager.LayoutParams.MATCH_PARENT);
+                    Button button = (Button) alert.getWindow().findViewById(R.id.try_again_internet_button);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (ConnectivityReceiver.isConnected()){
+                                alert.dismiss();
+                            }
+                        }
+                    });
+
+                    alert.show();
+                }
 
             }
         });
@@ -164,7 +192,7 @@ public class NewOtpVerify extends Fragment {
         task.addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                final MySMSBroadcastReceiver receiver = new MySMSBroadcastReceiver();
+                final SMSBroadcastReceiver receiver = new SMSBroadcastReceiver();
                 getActivity().registerReceiver(receiver, new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION));
                 receiver.setOnSmsReceivedListener(new OnSmsReceived() {
                     @Override

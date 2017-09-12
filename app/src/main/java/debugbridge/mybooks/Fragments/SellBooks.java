@@ -1,5 +1,6 @@
 package debugbridge.mybooks.Fragments;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -55,6 +56,7 @@ import debugbridge.mybooks.AppVolley.SingletonVolley;
 import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.Model.MainCategory;
 import debugbridge.mybooks.Model.SubCategory;
+import debugbridge.mybooks.MyReceiver.ConnectivityReceiver;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.SharedPrefs.LocationPrefs;
 import debugbridge.mybooks.SharedPrefs.UserData;
@@ -78,8 +80,6 @@ public class SellBooks extends Fragment implements AdapterView.OnItemSelectedLis
     private Button button;
     private TextView sell_location;
     private final int CHANGE_LOCATION = 4500;
-
-    //private boolean clickable = true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -193,10 +193,6 @@ public class SellBooks extends Fragment implements AdapterView.OnItemSelectedLis
             @Override
             public void onClick(View v) {
 
-//                if (!clickable){
-//                    return;
-//                }
-
                 String id = subCategoryList.get(subcategory.getSelectedItemPosition()).getId();
                 String bookTitle = title.getText().toString();
                 String bookDescription = description.getText().toString();
@@ -224,9 +220,34 @@ public class SellBooks extends Fragment implements AdapterView.OnItemSelectedLis
                     return;
                 }
 
-                //clickable = false;
+                if (ConnectivityReceiver.isConnected()){
+                    insertData(id, bookTitle, bookDescription, bookAmount, bookAuthor, bookPubliction);
+                }else {
+                    final Dialog alert = new Dialog(getContext(), R.style.full_screen_dialog);
+                    alert.setContentView(R.layout.internet_customize_alert);
+                    alert.setCancelable(true);
+                    alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            getActivity().onBackPressed();
+                        }
+                    });
+                    alert.setCanceledOnTouchOutside(false);
+                    alert.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                            WindowManager.LayoutParams.MATCH_PARENT);
+                    Button button = (Button) alert.getWindow().findViewById(R.id.try_again_internet_button);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (ConnectivityReceiver.isConnected()){
+                                alert.dismiss();
+                            }
+                        }
+                    });
 
-                insertData(id, bookTitle, bookDescription, bookAmount, bookAuthor, bookPubliction);
+                    alert.show();
+                }
+
 
             }
         });
@@ -402,6 +423,32 @@ public class SellBooks extends Fragment implements AdapterView.OnItemSelectedLis
         bitmapImage = null;
     }
 
+    private void showThankYouMessage(){
+
+        final Dialog alert = new Dialog(getContext(), R.style.full_screen_dialog);
+        alert.setContentView(R.layout.thank_you_dialog);
+        alert.setCancelable(true);
+        alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                alert.dismiss();
+            }
+        });
+        alert.setCanceledOnTouchOutside(false);
+        alert.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT);
+        Button button = (Button) alert.getWindow().findViewById(R.id.thank_you_ok);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alert.dismiss();
+            }
+        });
+
+        alert.show();
+
+    }
+
     private void insertData(final String category_id, final String book_title, final String book_desc, final String book_amount, final String book_author, final String book_publication){
 
         final ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.full_screen_dialog);
@@ -422,6 +469,7 @@ public class SellBooks extends Fragment implements AdapterView.OnItemSelectedLis
                         if (response.trim().equals("success")){
                             //refreshViews();
                             getActivity().onBackPressed();
+                            showThankYouMessage();
                             progressDialog.dismiss();
                         }else if (response.trim().equals("unsuccess")){
                             progressDialog.dismiss();

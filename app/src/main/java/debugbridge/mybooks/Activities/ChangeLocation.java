@@ -574,14 +574,7 @@ public class ChangeLocation extends AppCompatActivity implements GoogleApiClient
             }
         }*/
 
-        Log.e(TAG, city + state + country);
-
-        float[] results = new float[1];
-        Location.distanceBetween(latitude, longitude, 22.7441, 77.7370, results);
-        float distanceInMeters = results[0];
-        boolean isWithin10km = distanceInMeters < 10000;
-
-        Log.e(TAG , "isWithin10km " + isWithin10km);
+        //Log.e(TAG, city + state + country);
 
     }
 

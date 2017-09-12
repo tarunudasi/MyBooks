@@ -10,5 +10,32 @@
     <string name="category">CATEGORY</string>
     <string name="search">Search</string>
     <string name="search_hint">Search</string>
+    <string name="no_internet_button">Try Again</string>
+    <string name="no_internet_head">NO INTERNET FOUND</string>
+    <string name="no_internet_msg">Seems like you are offline at the moment. Please try again once you are connected to the internet</string>
+    <string name="sign_in_email_hint">Email Address</string>
+    <string name="sign_in_password_hint">Password</string>
+    <string name="sign_in_button">Login to My Account</string>
+    <string name="forgot_password">Forgot Password ?</string>
+    <string name="don_t_have_account">Don\'t have an Account ? </string>
+    <string name="register_btn">Register</string>
+    <string name="logo_description">R Books Logo</string>
+    <string name="no_internet_pic">Internet Unavailable</string>
+    <string name="no_books_available">It seems that there is no books available for this location.</string>
+    <string name="no_books_available_pic">Books Unavailable</string>
+    <string name="registered_email_edit_text">Registered Email</string>
+    <string name="recover_button">Recover</string>
+    <string name="recover_your_password_title">Recover Your Password</string>
+    <string name="already_have_an_account">Already have an Account ?</string>
+    <string name="log_in_bottom_text">Log In</string>
+    <string name="already_know_the_password">Already Know the password ?</string>
+    <string name="email_sent_title">EMAIL SENT</string>
+    <string name="recover_your_password_msg">We have sent you an email to recover your password.</string>
+    <string name="ok_btn">Ok</string>
+    <string name="email_sent_pic_desc">email sent</string>
+    <string name="thank_you">THANK YOU !</string>
+    <string name="listed_for_sell">As soon as our admin verify your book selling request, your book will get listed for sell.</string>
+    <string name="no_book_for_sell">Still you have not posted any book for sell.</string>
+    <string name="no_books_available_logo">no books available</string>
 
 </resources>

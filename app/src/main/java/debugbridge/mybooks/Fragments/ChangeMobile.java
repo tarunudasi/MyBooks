@@ -1,5 +1,6 @@
 package debugbridge.mybooks.Fragments;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.PorterDuff;
@@ -44,6 +45,7 @@ import debugbridge.mybooks.Adapter.SpinnerCountryArrayAdapter;
 import debugbridge.mybooks.AppVolley.SingletonVolley;
 import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.Model.Country;
+import debugbridge.mybooks.MyReceiver.ConnectivityReceiver;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.SharedPrefs.UserData;
 import debugbridge.mybooks.Utility.UrlConstant;
@@ -118,7 +120,38 @@ public class ChangeMobile extends Fragment {
                     change_number.setError("Enter valid Number");
                     return;
                 }
-                changeMobile(countryCodeTextView.getText() + change_number.getText().toString());
+
+                if (ConnectivityReceiver.isConnected()){
+                    changeMobile(countryCodeTextView.getText() + change_number.getText().toString());
+                }else{
+
+                    final Dialog alert = new Dialog(getContext(), R.style.full_screen_dialog);
+                    alert.setContentView(R.layout.internet_customize_alert);
+                    alert.setCancelable(true);
+                    alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            getActivity().onBackPressed();
+                        }
+                    });
+                    alert.setCanceledOnTouchOutside(false);
+                    alert.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                            WindowManager.LayoutParams.MATCH_PARENT);
+                    Button button = (Button) alert.getWindow().findViewById(R.id.try_again_internet_button);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (ConnectivityReceiver.isConnected()){
+                                alert.dismiss();
+                            }
+                        }
+                    });
+
+                    alert.show();
+
+                }
+
+
             }
         });
 
@@ -207,12 +240,9 @@ public class ChangeMobile extends Fragment {
         upArrow.setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_ATOP);
         ((MainActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
-        InputMethodManager inputMethodManager = (InputMethodManager) getActivity()
-                .getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
 
-        inputMethodManager.hideSoftInputFromWindow(
-                getActivity().getCurrentFocus()
-                        .getWindowToken(), 0);
     }
 
 

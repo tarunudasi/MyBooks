@@ -1,4 +1,4 @@
-package debugbridge.mybooks.InternetUtil;
+package debugbridge.mybooks.MyReceiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

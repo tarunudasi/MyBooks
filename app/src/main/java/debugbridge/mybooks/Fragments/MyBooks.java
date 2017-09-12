@@ -1,5 +1,6 @@
 package debugbridge.mybooks.Fragments;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,8 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -38,6 +41,7 @@ import debugbridge.mybooks.Adapter.MyBooksRecyclerAdapter;
 import debugbridge.mybooks.AppVolley.SingletonVolley;
 import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.Model.Books;
+import debugbridge.mybooks.MyReceiver.ConnectivityReceiver;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.SharedPrefs.UserData;
 import debugbridge.mybooks.Utility.UrlConstant;
@@ -51,6 +55,7 @@ public class MyBooks extends Fragment {
     private MyBooksRecyclerAdapter adapter;
     private List<Object> list;
     private final int REQUEST_CODE = 5689;
+    private LinearLayout no_books_for_sell;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +68,8 @@ public class MyBooks extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_books, container, false);
 
+        no_books_for_sell = (LinearLayout) view.findViewById(R.id.no_books_for_sell);
+
         list = new ArrayList<>();
         adapter = new MyBooksRecyclerAdapter(list, getContext(), getActivity());
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
@@ -72,7 +79,35 @@ public class MyBooks extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-        getMyBooks();
+        if (ConnectivityReceiver.isConnected()){
+            getMyBooks();
+        }else {
+            final Dialog alert = new Dialog(getContext(), R.style.full_screen_dialog);
+            alert.setContentView(R.layout.internet_customize_alert);
+            alert.setCancelable(true);
+            alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    getActivity().onBackPressed();
+                }
+            });
+            alert.setCanceledOnTouchOutside(false);
+            alert.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT);
+            Button button = (Button) alert.getWindow().findViewById(R.id.try_again_internet_button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (ConnectivityReceiver.isConnected()){
+                        alert.dismiss();
+                        getMyBooks();
+                    }
+                }
+            });
+
+            alert.show();
+        }
+
 
         adapter.setOnItemClick(new OnClickListener() {
             @Override
@@ -106,12 +141,12 @@ public class MyBooks extends Fragment {
                     public void onResponse(String response) {
 
                         progressDialog.dismiss();
-
+                        no_books_for_sell.setVisibility(View.GONE);
                         list.clear();
-
                         adapter.notifyDataSetChanged();
 
                         if (response.equals("unsuccessful")){
+                            no_books_for_sell.setVisibility(View.VISIBLE);
                             return;
                         }
 
@@ -124,7 +159,6 @@ public class MyBooks extends Fragment {
                                 list.add(new Books(object.getString("id"),object.getString("name"),object.getString("amount"),object.getString("description"),object.getString("author"),object.getString("publication"),object.getString("img"),object.getString("user"), object.getString("latitude"), object.getString("longitude"), object.getString("verify"), object.getString("sold")));
                                 adapter.notifyDataSetChanged();
                             }
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();

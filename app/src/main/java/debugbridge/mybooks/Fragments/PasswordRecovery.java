@@ -3,18 +3,16 @@ package debugbridge.mybooks.Fragments;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -29,54 +27,50 @@ import java.util.HashMap;
 import java.util.Map;
 
 import debugbridge.mybooks.AppVolley.SingletonVolley;
-import debugbridge.mybooks.MainActivity;
 import debugbridge.mybooks.MyReceiver.ConnectivityReceiver;
 import debugbridge.mybooks.R;
-import debugbridge.mybooks.SharedPrefs.UserData;
 import debugbridge.mybooks.Utility.UrlConstant;
 
-public class ChangePassword extends Fragment {
+public class PasswordRecovery extends Fragment{
 
-    private EditText password_change, new_password_change, confirm_password_change;
-    private Button change_password_btn;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
+    private TextView forgot_password_login;
+    private Button recover_password;
+    private EditText forgot_email;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_change_password, container, false);
+        View view = inflater.inflate(R.layout.fragment_password_recovery, container, false);
+        init(view);
+        return view;
+    }
 
-        password_change = (EditText) view.findViewById(R.id.password_change);
-        new_password_change = (EditText) view.findViewById(R.id.new_password_change);
-        confirm_password_change = (EditText) view.findViewById(R.id.confirm_password_change);
+    public boolean isValidEmail(CharSequence target) {
+        return target != null && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
 
-        change_password_btn = (Button) view.findViewById(R.id.change_password_btn);
+    private void init(View view){
+        forgot_password_login = (TextView) view.findViewById(R.id.forgot_password_login);
+        recover_password = (Button) view.findViewById(R.id.recover_password);
+        forgot_email = (EditText) view.findViewById(R.id.forgot_email);
 
-        change_password_btn.setOnClickListener(new View.OnClickListener() {
+        forgot_password_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
 
-                if (password_change.getText().length() < 1){
-                    password_change.setError("Insert Password");
-                    return;
-                }else if (new_password_change.getText().length() < 1){
-                    new_password_change.setError("Insert New Password");
-                    return;
-                }else if (confirm_password_change.getText().length() < 1){
-                    confirm_password_change.setError("Insert Confirm Password");
-                    return;
-                }else if (!new_password_change.getText().toString().equals(confirm_password_change.getText().toString())){
-                    Toast.makeText(getContext(),"Password Mismatch", Toast.LENGTH_SHORT).show();
+        recover_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!(isValidEmail(forgot_email.getText()) && forgot_email.getText().toString().length() > 0)){
+                    forgot_email.setError("Invalid Email Address");
                     return;
                 }
 
-                if (ConnectivityReceiver.isConnected()){
-                    changePassword(password_change.getText().toString(), new_password_change.getText().toString());
+                if (ConnectivityReceiver.isConnected()) {
+                    forgotPassword(forgot_email.getText().toString());
                 }else {
                     final Dialog alert = new Dialog(getContext(), R.style.full_screen_dialog);
                     alert.setContentView(R.layout.internet_customize_alert);
@@ -99,18 +93,37 @@ public class ChangePassword extends Fragment {
                             }
                         }
                     });
-
                     alert.show();
-
                 }
-
             }
         });
 
-        return view;
     }
 
-    private void changePassword(final String password, final String newPassword){
+    private void sentEmailDialog(){
+        final Dialog alert = new Dialog(getContext(), R.style.full_screen_dialog);
+        alert.setContentView(R.layout.password_recovery_alert);
+        alert.setCancelable(true);
+        alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                alert.dismiss();
+            }
+        });
+        alert.setCanceledOnTouchOutside(false);
+        alert.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT);
+        Button button = (Button) alert.getWindow().findViewById(R.id.ok_email_sent);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alert.dismiss();
+            }
+        });
+        alert.show();
+    }
+
+    private void forgotPassword(final String email){
 
         final ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.full_screen_dialog);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -122,20 +135,21 @@ public class ChangePassword extends Fragment {
         BookLoading bookLoading = (BookLoading) progressDialog.getWindow().findViewById(R.id.book_loading_progress);
         bookLoading.start();
 
-        final StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlConstant.CHANGE_PASSWORD,
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlConstant.RECOVERY_PASSWORD,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         if (response.trim().equals("success")){
                             getActivity().onBackPressed();
-                            Toast.makeText(getContext(), "Password Changed", Toast.LENGTH_LONG ).show();
+                            sentEmailDialog();
+                            progressDialog.dismiss();
                         }else if (response.trim().equals("unsuccessful")){
-                            password_change.setError("Wrong Password");
+                            progressDialog.dismiss();
+                            forgot_email.setError("Invalid Email Address");
+                        }else {
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity().getApplicationContext(),response,Toast.LENGTH_LONG).show();
                         }
-
-                        progressDialog.dismiss();
-
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -147,9 +161,7 @@ public class ChangePassword extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("email", UserData.getInstance(getContext()).getUser().getEmail());
-                params.put("password", password);
-                params.put("new_password", newPassword);
+                params.put("email", email);
                 return params;
             }
         };
@@ -166,18 +178,5 @@ public class ChangePassword extends Fragment {
         SingletonVolley.getInstance(getContext()).addToRequestQueue(stringRequest);
 
     }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Change Password");
-        ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(null);
-
-        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        final Drawable upArrow = getResources().getDrawable(R.drawable.ic_back_arrow);
-        upArrow.setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_ATOP);
-        ((MainActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
-    }
-
 
 }

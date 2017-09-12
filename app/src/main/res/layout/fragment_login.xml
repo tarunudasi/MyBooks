@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:clickable="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:clickable="true">
 
         <ImageView
+            android:contentDescription="@string/logo_description"
             android:id="@+id/login_logo"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
@@ -63,11 +61,11 @@
                 android:inputType="textEmailAddress"
                 android:textColorHint="@color/outline"
                 android:textColor="@color/outline"
-                android:hint="Email Address" />
+                android:hint="@string/sign_in_email_hint" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="20dp" />
+                android:layout_height="10dp" />
 
             <EditText
                 android:gravity="center"
@@ -83,11 +81,11 @@
                 android:inputType="textPassword"
                 android:textColorHint="@color/outline"
                 android:textColor="@color/outline"
-                android:hint="Password" />
+                android:hint="@string/sign_in_password_hint" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="20dp" />
+                android:layout_height="10dp" />
 
             <android.support.v7.widget.AppCompatButton
                 android:layout_gravity="center"
@@ -100,16 +98,19 @@
                 android:padding="14dp"
                 android:inputType="textCapCharacters"
                 android:background="@drawable/login_button"
-                android:text="Login to My Account"/>
+                android:text="@string/sign_in_button"/>
 
-            <TextView
+            <Button
+                android:id="@+id/forgot_password_button"
+                android:background="@android:color/transparent"
                 android:padding="14dp"
+                android:inputType="textCapCharacters"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/outline"
-                android:text="Forgot Password ?" />
+                android:text="@string/forgot_password" />
 
         </LinearLayout>
 
@@ -128,21 +129,18 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textColor="@color/outline"
-                android:text="Don't have an Account ? "/>
+                android:text="@string/don_t_have_account"/>
 
             <TextView
+                android:padding="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="@color/outline"
                 android:textStyle="bold"
-                android:text="Register"
+                android:text="@string/register_btn"
                 android:id="@+id/sign_up"/>
 
         </LinearLayout>
 
-
-    </RelativeLayout>
-
-
-</LinearLayout>
+</RelativeLayout>

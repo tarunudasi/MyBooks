@@ -23,5 +23,6 @@ public class UrlConstant {
     public static final String CHANGE_MOBILE = BASE + "changeMobile.php";
     public static final String GET_USER_BOOKS = BASE + "getUserBooks.php";
     public static final String BOOK_SOLD = BASE + "bookSold.php";
+    public static final String RECOVERY_PASSWORD = BASE + "recoveryPassword.php";
 
 }

@@ -230,6 +230,9 @@ public class GetLocation extends AppCompatActivity implements GoogleApiClient.Co
                 })
         );
 
+        if (mGoogleApiClient != null) {
+            getLocation();
+        }
 
     }
 
@@ -243,14 +246,6 @@ public class GetLocation extends AppCompatActivity implements GoogleApiClient.Co
         }
 
         return result;
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (mGoogleApiClient != null) {
-            getLocation();
-        }
     }
 
     protected void startLocationUpdates() {

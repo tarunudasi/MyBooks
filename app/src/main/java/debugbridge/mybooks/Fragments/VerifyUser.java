@@ -1,5 +1,6 @@
 package debugbridge.mybooks.Fragments;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ import java.util.Map;
 import debugbridge.mybooks.Adapter.SpinnerCountryArrayAdapter;
 import debugbridge.mybooks.AppVolley.SingletonVolley;
 import debugbridge.mybooks.Model.Country;
+import debugbridge.mybooks.MyReceiver.ConnectivityReceiver;
 import debugbridge.mybooks.R;
 import debugbridge.mybooks.Utility.UrlConstant;
 
@@ -149,11 +151,39 @@ public class VerifyUser extends Fragment{
         verify_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (verify_number.getText().length() != 10){
+                if (verify_number.getText().length() > 3){
                     verify_number.setError("Enter valid Number");
                     return;
                 }
-                verifyUser(countryCodeTextView.getText() + verify_number.getText().toString(), email);
+
+                if (ConnectivityReceiver.isConnected()) {
+                    verifyUser(countryCodeTextView.getText() + verify_number.getText().toString(), email);
+                }else {
+                    final Dialog alert = new Dialog(getContext(), R.style.full_screen_dialog);
+                    alert.setContentView(R.layout.internet_customize_alert);
+                    alert.setCancelable(true);
+                    alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            getActivity().finish();
+                        }
+                    });
+                    alert.setCanceledOnTouchOutside(false);
+                    alert.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                            WindowManager.LayoutParams.MATCH_PARENT);
+                    Button button = (Button) alert.getWindow().findViewById(R.id.try_again_internet_button);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (ConnectivityReceiver.isConnected()){
+                                alert.dismiss();
+                            }
+                        }
+                    });
+
+                    alert.show();
+                }
+
             }
         });
 

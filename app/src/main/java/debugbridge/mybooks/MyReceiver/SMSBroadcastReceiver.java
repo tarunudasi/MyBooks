@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 import debugbridge.mybooks.listener.OnSmsReceived;
 
-public class MySMSBroadcastReceiver extends BroadcastReceiver {
+public class SMSBroadcastReceiver extends BroadcastReceiver {
 
     private OnSmsReceived onSmsReceived;
     private boolean timeOut = false;

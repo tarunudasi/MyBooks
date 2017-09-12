@@ -72,12 +72,16 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter{
                     .placeholder(R.drawable.placeholder)
                     .into(categoryViewHolder.category_image_rv);
         }else if (holder.getItemViewType() == HEADER){
+
             Slidder slidder = (Slidder) list.get(position);
             SliderViewHolder sliderViewHolder = (SliderViewHolder) holder;
+
             HashMap<String,String> url_maps = new HashMap<>();
+
             for (int i = 0 ; i < slidder.getList().size() ; i++){
                 url_maps.put(i+1+"",slidder.getList().get(i).replace(" ","%20"));
             }
+
             for(String name : url_maps.keySet()){
                 DefaultSliderView textSliderView = new DefaultSliderView(context);
                 // initialize a SliderLayout
@@ -90,7 +94,6 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter{
                 textSliderView.bundle(new Bundle());
                 textSliderView.getBundle()
                         .putString("extra",name);
-
                 sliderViewHolder.mDemoSlider.addSlider(textSliderView);
             }
             sliderViewHolder.mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Stack);

@@ -2,7 +2,7 @@ package debugbridge.mybooks.AppData;
 
 import android.app.Application;
 
-import debugbridge.mybooks.InternetUtil.ConnectivityReceiver;
+import debugbridge.mybooks.MyReceiver.ConnectivityReceiver;
 
 public class ReceiverInitiator extends Application {
 

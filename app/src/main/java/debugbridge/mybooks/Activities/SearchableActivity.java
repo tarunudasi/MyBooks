@@ -1,7 +1,9 @@
 package debugbridge.mybooks.Activities;
 
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -11,18 +13,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import debugbridge.mybooks.Adapter.PagerAdapter;
 import debugbridge.mybooks.Fragments.AuthorTab;
 import debugbridge.mybooks.Fragments.PublicationTab;
 import debugbridge.mybooks.Fragments.TitleTab;
+import debugbridge.mybooks.MyReceiver.ConnectivityReceiver;
 import debugbridge.mybooks.R;
 
 public class SearchableActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
-    PagerAdapter pagerAdapter;
-    TabLayout tabLayout;
+    private PagerAdapter pagerAdapter;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +131,32 @@ public class SearchableActivity extends AppCompatActivity implements SearchView.
                     ((PublicationTab) fragment).search(newText);
                     break;
             }
+        }
+
+        if (!ConnectivityReceiver.isConnected()){
+            final Dialog alert = new Dialog(this, R.style.full_screen_dialog);
+            alert.setContentView(R.layout.internet_customize_alert);
+            alert.setCancelable(true);
+            alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    onBackPressed();
+                }
+            });
+            alert.setCanceledOnTouchOutside(false);
+            alert.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT);
+            Button button = (Button) alert.getWindow().findViewById(R.id.try_again_internet_button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (ConnectivityReceiver.isConnected()){
+                        alert.dismiss();
+                    }
+                }
+            });
+
+            alert.show();
         }
 
         return false;

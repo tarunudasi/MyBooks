@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -58,6 +59,7 @@ public class ViewBooks extends Fragment{
     private int sorting = 2;
     private ProgressDialog progressDialog;
     private TextView textView;
+    private RelativeLayout books_unavailable;
 
 
     @Override
@@ -78,6 +80,8 @@ public class ViewBooks extends Fragment{
         }
 
         LocationPrefs.getInstance(getContext()).setDistance(10);
+
+        books_unavailable = (RelativeLayout) view.findViewById(R.id.books_unavailable);
 
         progressDialog = new ProgressDialog(getContext(), R.style.full_screen_dialog);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -183,6 +187,8 @@ public class ViewBooks extends Fragment{
             }
         });
 
+
+
         getBooks();
 
         return view;
@@ -253,8 +259,11 @@ public class ViewBooks extends Fragment{
                         adapter.notifyDataSetChanged();
 
                         if (response.equals("unsuccessful")){
+                            books_unavailable.setVisibility(View.VISIBLE);
                             return;
                         }
+
+                        books_unavailable.setVisibility(View.GONE);
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);
@@ -270,8 +279,6 @@ public class ViewBooks extends Fragment{
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
 
                     }
                 }, new Response.ErrorListener() {
@@ -291,6 +298,8 @@ public class ViewBooks extends Fragment{
                 return params;
             }
         };
+
+        stringRequest.setShouldCache(false);
 
         SingletonVolley.getInstance(getContext()).addToRequestQueue(stringRequest);
 
