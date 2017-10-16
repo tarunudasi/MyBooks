@@ -14,7 +14,6 @@
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/bookimage"
-            android:scaleType="fitXY"
             android:minHeight="200dp"
             android:layout_height="300dp"
             android:layout_width="match_parent" />

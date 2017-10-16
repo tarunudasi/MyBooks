@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:clickable="true"
@@ -29,23 +30,28 @@
 
     </android.support.v7.widget.CardView>
 
-    <RelativeLayout
-        android:id="@+id/books_unavailable"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:id="@+id/books_unavailable"
+            android:visibility="gone"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <!--<ImageView
                 android:contentDescription="@string/no_books_available_pic"
                 android:src="@drawable/books_available"
                 android:layout_width="match_parent"
                 android:layout_height="180dp" />
+-->
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adViewItemNoBooks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                ads:adSize="MEDIUM_RECTANGLE"
+                ads:adUnitId="@string/ad_mob_banner_large" />
 
             <TextView
                 android:textColor="@android:color/black"
@@ -66,8 +72,6 @@
                 android:layout_height="wrap_content" />
 -->
         </LinearLayout>
-
-    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:layout_marginTop="10dp"

@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="@android:color/white"
     android:clickable="true"
+    android:orientation="vertical"
     android:focusableInTouchMode="true"
     android:layout_height="match_parent"
+    android:weightSum="1"
     android:layout_gravity="center">
 
     <TextView
-        android:layout_marginTop="20dp"
+        android:layout_weight="0.2"
         android:text="Let's Get Started !"
         android:textSize="35sp"
         android:textColor="@color/outline"
         android:gravity="center"
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp" />
 
     <LinearLayout
+        android:id="@+id/sign_up_layout"
         android:background="@android:color/white"
         android:layout_centerInParent="true"
         android:orientation="vertical"
         android:layout_width="280dp"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="0.7">
 
         <EditText
             android:gravity="center"
@@ -105,8 +110,9 @@
         android:layout_centerInParent="true"
         android:padding="10dp"
         android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
         android:orientation="horizontal">
 
         <TextView
@@ -117,7 +123,7 @@
             android:text="@string/already_have_an_account"/>
 
         <TextView
-            android:padding="10dp"
+            android:paddingLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
@@ -128,4 +134,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

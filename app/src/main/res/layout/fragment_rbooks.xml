@@ -31,17 +31,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
+        <!--<LinearLayout
+            android:paddingTop="20dp"
+            android:paddingBottom="40dp"
+            android:gravity="center"
+            android:background="@drawable/slider_background"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="260dp">
+-->
         <com.daimajia.slider.library.SliderLayout
             android:id="@+id/slider"
             android:layout_width="match_parent"
-            android:layout_height="190dp" />
+            android:layout_height="match_parent"
+            app:pager_animation="Tablet"
+            app:auto_cycle="true"
+            app:pager_animation_span="1000" />
 
         <com.daimajia.slider.library.Indicators.PagerIndicator
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center" />
 
+        <!--</LinearLayout>-->
+
         <android.support.v7.widget.RecyclerView
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:id="@+id/category_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

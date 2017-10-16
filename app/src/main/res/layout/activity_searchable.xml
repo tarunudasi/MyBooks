@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="debugbridge.mybooks.Activities.SearchableActivity">
+    tools:context="com.rbooks.Activities.SearchableActivity">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/search_tab_layout"

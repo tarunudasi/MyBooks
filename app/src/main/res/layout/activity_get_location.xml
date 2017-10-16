@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="debugbridge.mybooks.Activities.GetLocation">
+    tools:context="com.rbooks.Activities.GetLocation">
 
     <!--<android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:id="@+id/place_autocomplete_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            android:name="com.google.android.gms.locationModel.places.ui.PlaceAutocompleteFragment"
             />
 
     </android.support.v7.widget.CardView>-->

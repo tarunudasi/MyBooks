@@ -2,7 +2,9 @@
     <string name="app_name">RBooks</string>
     <string name="title_my_books">Home</string>
     <string name="title_profile">Profile</string>
-
+    <string name="ad_mob_banner">ca-app-pub-2335772106740859/3704142922</string>
+    <string name="ad_mob_banner_large">ca-app-pub-2335772106740859/9848281813</string>
+    <string name="ad_mob_full_screen">ca-app-pub-2335772106740859/2642342699</string>
 
     <string name="MYBOOKS">My Books</string>
     <string name="termsncondi">Terms &amp; Condition</string>
@@ -37,5 +39,28 @@
     <string name="listed_for_sell">As soon as our admin verify your book selling request, your book will get listed for sell.</string>
     <string name="no_book_for_sell">Still you have not posted any book for sell.</string>
     <string name="no_books_available_logo">no books available</string>
+    <string name="no_internet">No Connection</string>
+    <string name="retry">Retry</string>
+    <string name="general_condition">General Condition to use RBooks :</string>
+    <string name="terms_general_condition">
+        1. Rbooks offers a platform for users to search old books for buying and selling books (intra-city or inter-city). It enables User to share their old books with other User. All books on Rbooks app are Uploaded by Buyer &amp; Seller only not by Rbooks.
+\n2. Rbooks system will be used to facilitate the selling and buying of second hand books.Users have to meet and then give books to each other.
+\n3. Users can sell their books by price. While with price value, users can give and take books and money at their meeting place. For receiving cash price, users have to meet and collect the cash and give the required books to user. Rbooks is not responsible for the transaction between two users for buy and sell of books. We are not responsible for any misconduct by meeting users. Please select a safe place to buy and give books to users.
+\n4. To list books for sale, you can upload books from upload section. You can select preferences of upload.
+\n5. User Content uploaded on Rbooks - All information whether images and content uploaded to the App by users, is the sole responsibility of such users. This means that the user, and not us, are entirely responsible for all such material uploaded, posted, emailed, transmitted or otherwise made available by using Rbooks. We do not control such content posted to the App and, as such do not guarantee the accuracy, integrity or quality of such content. If you see any content on the App which you consider inappropriate, please notify us so we can review and take action where appropriate. However, by using Rbooks you acknowledge and agree that under no circumstances will we be liable in any way for any materials on the App, or for any loss or damage of any kind incurred as a result of the viewing or use of any materials posted, emailed, transmitted or otherwise made available on the App.
+\n6. Further, if you have provided your phone number and posted an advertisement using your account, you agree to receive communications on the provided phone number from our side which may include but not be limited to automated calls or text messages.
+\n7. No spams policy- You understand and agree that sending unsolicited email or other unsolicited communications to Rbooks email addresses or through Rbooks are expressly prohibited by these Terms. You acknowledge and agree that from time to time Rbooks monitor email usage using automated software to flag certain words associated with spam or scams in emails that are sent between one user to another in the automated email service. Any communication between yourself and any other user utilizing the communication features available on the Service and the Platform may be used only in accordance with the Terms. Any unauthorized use of Rbooks is a violation of these Terms and applicable laws. Such violations may subject the sender and his or her agents to civil and criminal penalties.
+You will not use Rbooks for any purpose which is unlawful or illegal.
+    </string>
+    <string name="disclaimer">Disclaimer of warranties and no liabilities of company :</string>
+    <string name="terms_disclaimer">
+        1. User acknowledges that the Company is acting as a platform for old books for people offering buying and selling books. The service offered through Rbooks is provided on "As Is" basis without any representation or warranty of any kind from the Company, either expressed or implied, including without limitation, any representation or warranty for timeliness.
+\n2. Rbooks makes no representation about correctness of the Registration Data available on Rbooks or any other information published on Rbooks at any point of time. All information, picture(s), graphics, content is provided "as is" without warranty of any kind, either express or implied by Company on Rbooks.
+    </string>
+
+    <string name="confidentiality">Confidentiality :</string>
+    <string name="terms_confidentiality">
+        Users shall be responsible for maintaining the confidentiality of his user ID and password created at the time of registration and User shall be fully responsible for all the activities that occur under his User Account at all times.
+    </string>
 
 </resources>
